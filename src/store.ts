@@ -35,13 +35,12 @@ export interface Game {
 	visitor: Team,
 	court: Court,
 	status: "planned" | "running" | "paused" | "finished",
-	duration: number
 }
 
 export interface Round {
-	id: ID,
-	number: number,
-	games: Game[]
+	nr: number,
+	games: Game[],
+	duration: number
 }
 
 export interface Tournament {
@@ -60,6 +59,7 @@ export const courts = writable<Court[]>([])
 
 export const games = writable<Game[]>([])
 
+export const tournament = writable<Tournament>()
 
 //   export const onClick = () => {
 //     $x.count = $x.count + 1
@@ -67,5 +67,3 @@ export const games = writable<Game[]>([])
 
 
 // TRANS (https://www.obut.com/en/glossary-of-petanque-terms)
-
-export const tournament = writable<Tournament[]>([])

@@ -1,8 +1,26 @@
 <script lang="ts">
   import bouleLogo from "/boule.svg";
   import Prepare from "./lib/Prepare.svelte";
+
+  type Page = "preparation" | "round" | "ranking";
+  const pages: Page[] = ["preparation", "round", "ranking"];
+  let page: Page = "preparation";
+
+  function goTo(p: Page) {
+    page = p;
+  }
   // TODO turnier name etc.
 </script>
+
+<nav class="pages">
+  <ol>
+    {#each pages as p}
+      <li class="page">
+        <button on:click={() => goTo(p)} disabled={p === page}>{p}</button>
+      </li>
+    {/each}
+  </ol>
+</nav>
 
 <main>
   <div>
@@ -12,9 +30,13 @@
   </div>
   <h1>Turnier</h1>
 
-  <div class="card">
+  {#if page === "preparation"}
     <Prepare />
-  </div>
+  {:else if page === "round"}
+    <div>Round</div>
+  {:else if page === "ranking"}
+    <div>Ranking</div>
+  {/if}
 </main>
 
 <style>
@@ -26,5 +48,18 @@
   }
   .logo:hover {
     filter: drop-shadow(0 0 2em #646cffaa);
+  }
+
+  nav {
+    border-bottom: 1px solid black;
+  }
+
+  .pages ol {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .page {
+    display: inline-block;
   }
 </style>
