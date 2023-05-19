@@ -2,27 +2,41 @@
   import { players, teams } from "../store";
   import type { Player, Team } from "../store";
   import { v4 as uuidv4 } from "uuid";
-  import { Player } from "./Player.svelte";
 
-  // FIXME add teams instead!
   let teamList: Team[] = [];
 
   teams.subscribe((tl) => {
     teamList = tl;
   });
 
-  let newName = "";
+  let [teamName, p1Name, p2Name] = ["", "", ""];
 
-  function add() {
-    // TODO add to store?
+  function addTeam() {
+    const p1: Player = {
+      id: uuidv4(),
+      name: p1Name,
+    };
+    const p2: Player = {
+      id: uuidv4(),
+      name: p2Name,
+    };
+
     players.update((pl) => {
-      pl.push({
-        id: uuidv4(),
-        name: newName,
-      });
+      pl.push(p1, p2);
       return pl;
     });
-    newName = "";
+
+    teams.update((t) => {
+      t.push({
+        id: uuidv4(),
+        name: teamName,
+        points: 0,
+        members: [p1, p2],
+      });
+      return t;
+    });
+
+    [teamName, p1Name, p2Name] = ["", "", ""];
   }
 </script>
 
@@ -30,20 +44,32 @@
   {#each teamList as { id, members, name, points }, i}
     <li>
       <ul>
-        `${i + 1}: ${name || id.slice(5)} (${points} wins)`
+        {i + 1}: {name || id.slice(5)} ({points} wins): {members.map(
+          (m) => m.name
+        )}
       </ul>
     </li>
   {/each}
 </ul>
 
+<input bind:value={teamName} placeholder="Les Fromages" />
+
 <input
-  bind:value={newName}
+  bind:value={p1Name}
   placeholder="Jean-Pierre Baptiste"
   required
   minlength="2"
   maxlength="40"
 />
 
-{#if newName.length >= 2}
-  <button on:click={add}> + </button>
+<input
+  bind:value={p2Name}
+  placeholder="Anne-Marie Blanche"
+  required
+  minlength="2"
+  maxlength="40"
+/>
+
+{#if p1Name.length >= 2 && p2Name.length >= 2}
+  <button on:click={addTeam}> + </button>
 {/if}
