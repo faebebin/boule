@@ -36,11 +36,10 @@
       </li>
     {/each}
   </ul>
-  <p class="soon">TODO anpassbar</p>
 {/if}
 
 {#if courtCount > 0}
-  <button on:click={generateCourts}
-    >{courtList.length > 0 ? "Adapt" : "Create"} Courts</button
+  <button on:click={generateCourts} disabled={courtList.length > 0}
+    >{courtList.length > 0 ? "Adapt (TODO)" : "Create"} Courts</button
   >
 {/if}
