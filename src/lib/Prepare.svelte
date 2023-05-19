@@ -52,9 +52,12 @@
   {/each}
 </ul>
 
-<input bind:value={teamName} placeholder="Les Fromages" />
+<label for="team">Team</label>
+<input bind:value={teamName} placeholder="Les Fromages" id="team" />
 
+<label for="p1">P1</label>
 <input
+  id="p1"
   bind:value={p1Name}
   placeholder="Jean-Pierre Baptiste"
   required
@@ -62,7 +65,9 @@
   maxlength="40"
 />
 
+<label for="p2">P2</label>
 <input
+  id="p1"
   bind:value={p2Name}
   placeholder="Anne-Marie Blanche"
   required
