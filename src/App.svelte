@@ -3,6 +3,7 @@
   import viteLogo from "/vite.svg";
   import Counter from "./lib/Counter.svelte";
   import Prepare from "./lib/Prepare.svelte";
+  // TODO turnier name etc.
 </script>
 
 <main>
