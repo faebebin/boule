@@ -17,8 +17,9 @@ export interface Player {
 
 export interface Team {
 	id: ID,
-	member: Player[],
+	members: Player[],
 	points: number
+	name?: string
 }
 
 export interface Court {
@@ -51,13 +52,13 @@ export interface Tournament {
 	ranking: Team[]
 }
 
-export const players = writable<Player[]>()
+export const players = writable<Player[]>([])
 
-export const teams = writable<Team[]>()
+export const teams = writable<Team[]>([])
 
-export const courts = writable<Court[]>()
+export const courts = writable<Court[]>([])
 
-export const games = writable<Game[]>()
+export const games = writable<Game[]>([])
 
 
 //   export const onClick = () => {
@@ -67,4 +68,4 @@ export const games = writable<Game[]>()
 
 // TRANS (https://www.obut.com/en/glossary-of-petanque-terms)
 
-export const tournament = writable<Tournament>([])
+export const tournament = writable<Tournament[]>([])
