@@ -1,6 +1,7 @@
 <script lang="ts">
   import bouleLogo from "/boule.svg";
   import Prepare from "./lib/Prepare.svelte";
+  import Ranking from "./lib/Ranking.svelte";
 
   type Page = "preparation" | "round" | "ranking";
   const pages: Page[] = ["preparation", "round", "ranking"];
@@ -35,7 +36,7 @@
   {:else if page === "round"}
     <div>Round</div>
   {:else if page === "ranking"}
-    <div>Ranking</div>
+    <Ranking />
   {/if}
 </main>
 

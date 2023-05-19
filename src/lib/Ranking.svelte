@@ -5,18 +5,18 @@
   let teamsList: Team[] = [];
 
   teams.subscribe((tl) => {
-    // TODO more elegant
-    // Make editable with each and bind:
+    // TODO add to store custom update function
+    tl.sort((a, b) => a.points - b.points);
     teamsList = tl;
   });
 </script>
 
 {#if teamsList.length > 0}
   <ul>
-    {#each teamsList as { name }}
+    {#each teamsList as { name, points, members }, i}
       <li>
         <ul>
-          {name}
+          {i}. {name} [{members[0]}, {members[1]}]
         </ul>
       </li>
     {/each}
