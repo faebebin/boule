@@ -28,9 +28,9 @@
 {/if}
 
 <style>
-nav {
+  nav {
     border-bottom: 1px solid black;
-}
+  }
 
   .crumbs ol {
     list-style-type: none;

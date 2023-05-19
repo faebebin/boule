@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { players, teams } from "../store";
+  import { teams } from "../store";
   import type { Player, Team } from "../store";
   import { v4 as uuidv4 } from "uuid";
 
@@ -21,19 +21,14 @@
       name: p2Name,
     };
 
-    players.update((pl) => {
-      pl.push(p1, p2);
-      return pl;
-    });
-
-    teams.update((t) => {
-      t.push({
+    teams.update((tl) => {
+      tl.push({
         id: uuidv4(),
         name: teamName,
         points: 0,
         members: [p1, p2],
       });
-      return t;
+      return tl;
     });
 
     [teamName, p1Name, p2Name] = ["", "", ""];

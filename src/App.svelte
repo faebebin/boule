@@ -2,9 +2,10 @@
   import bouleLogo from "/boule.svg";
   import Prepare from "./lib/Prepare.svelte";
   import Ranking from "./lib/Ranking.svelte";
+  import Play from "./lib/Play.svelte";
 
-  type Page = "preparation" | "round" | "ranking";
-  const pages: Page[] = ["preparation", "round", "ranking"];
+  type Page = "preparation" | "play" | "ranking";
+  const pages: Page[] = ["preparation", "play", "ranking"];
   let page: Page = "preparation";
 
   function goTo(p: Page) {
@@ -33,8 +34,8 @@
 
   {#if page === "preparation"}
     <Prepare />
-  {:else if page === "round"}
-    <div>Round</div>
+  {:else if page === "play"}
+    <Play />
   {:else if page === "ranking"}
     <Ranking />
   {/if}

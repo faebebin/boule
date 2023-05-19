@@ -31,33 +31,30 @@ export interface Court {
 
 export interface Game {
 	id: ID,
-	home: Team,
-	visitor: Team,
-	court: Court,
+	home: Team["id"],
+	visitor: Team["id"],
+	homeScore: number,
+	visitorScore: number,
+	court: Court["id"],
 	status: "planned" | "running" | "paused" | "finished",
-}
-
-export interface Round {
-	nr: number,
-	games: Game[],
-	duration: number
+	round: number,
 }
 
 export interface Tournament {
 	id: ID,
 	name: string,
 	maxRounds: number,
-	rounds: Round[],
-	ranking: Team[]
+	games: Game["id"][],
+	teams: Team["id"][]
 }
-
-export const players = writable<Player[]>([])
 
 export const teams = writable<Team[]>([])
 
 export const courts = writable<Court[]>([])
 
 export const games = writable<Game[]>([])
+
+export const rounds = writable<Game[]>([])
 
 export const tournament = writable<Tournament>()
 
