@@ -20,7 +20,7 @@
   }
   function stop() {
     // timer off
-    evaluateRound();
+    evaluateRound(round);
   }
   function next() {
     // timer off
@@ -31,14 +31,14 @@
 
 <nav class="crumbs">
   <ol>
-    <li class="crumb"><button on:click={()=>{}}>Round 1</button></li>
-    <li class="crumb"><button on:click={()=>{}}>Round 2</button></li>
+    <li class="crumb"><button on:click={() => {}}>Round 1</button></li>
+    <li class="crumb"><button on:click={() => {}}>Round 2</button></li>
   </ol>
 </nav>
 
 <div>Games list Cards here</div>
 
-<button on:click={()=>{})}>first Round</button>
+<button on:click={() => {}}>first Round</button>
 
 <style>
   nav {
