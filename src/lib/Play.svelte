@@ -4,6 +4,8 @@
   import type { Game } from "../store";
   import { v4 as uuidv4 } from "uuid";
   import { games } from "../store";
+  import { get } from "svelte/store";
+  import { evaluateRound, prepareNextRound, rankTeams } from "../utils";
 
   let gameList: Game[] = [];
 
@@ -11,21 +13,32 @@
     gameList = gl;
   });
 
-  function firstRound() {}
+  const round = Math.max(...gameList.map(({ round }) => round));
+
+  function start() {
+    // timer on
+  }
+  function stop() {
+    // timer off
+    evaluateRound();
+  }
+  function next() {
+    // timer off
+    // next game
+    prepareNextRound(round + 1);
+  }
 </script>
 
 <nav class="crumbs">
   <ol>
-    <li class="crumb"><button on:click={firstRound}>Round 1</button></li>
-    <li class="crumb"><button on:click={firstRound}>Round 2</button></li>
+    <li class="crumb"><button on:click={()=>{}}>Round 1</button></li>
+    <li class="crumb"><button on:click={()=>{}}>Round 2</button></li>
   </ol>
 </nav>
 
 <div>Games list Cards here</div>
 
-{#if gameList.length > 0}
-  <button on:click={firstRound}>first Round</button>
-{/if}
+<button on:click={()=>{})}>first Round</button>
 
 <style>
   nav {

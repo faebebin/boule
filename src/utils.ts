@@ -15,18 +15,28 @@ export const numberOfRounds = (numberOfTeams: number): number => {
 	return 5;
 }
 
-const rankTeams = (): void => {
+export const rankTeams = (): void => {
 	teams.update((tl) => {
 		// tl.sort((a, b) => a.points - b.points);
-		// TODO 
+		// TODO nach points (hierarchical sort)
 		return tl;
 	})
 }
 
+export const evaluateRound = (round: number): void => {
+	const gamesList = get(games);
+	teams.update((tl) => {
+		for (const game of gamesList) {
+			// TODO: add points to teams
+		}
+		return tl
+	})
+} 
 
-export const nextRound = (): void => {
-	// TODO teams.reduce
+}
 
+
+export const prepareNextRound = (round: number): void => {
 	// if rounds.length === 0 then Math.random() ... 
 	// 1. Round: Random Games
 	// Following rounds: Match same points. !If played before, match teams with 1 point diff
@@ -43,7 +53,7 @@ export const nextRound = (): void => {
 			visitorScore: 0,
 			court: court.id,
 			status: "planned",
-			round: 1,
+			round,
 		}
 	})
 
