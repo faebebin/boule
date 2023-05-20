@@ -31,8 +31,6 @@ export const evaluateRound = (round: number): void => {
 		}
 		return tl
 	})
-} 
-
 }
 
 
