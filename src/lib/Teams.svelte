@@ -4,6 +4,7 @@
   import { v4 as uuidv4 } from "uuid";
   import { trans } from "../trans";
   import { example_teams } from "../fixtures/teams";
+  import Ranking from "./Ranking.svelte";
 
   let teamList: Team[] = [];
 
@@ -44,17 +45,7 @@
   }
 </script>
 
-<ul>
-  {#each teamList as { id, members, name, points }, i}
-    <li>
-      <ul>
-        {i + 1}: {name || id.slice(5)} ({points} wins): {members.map(
-          (m) => m.name
-        )}
-      </ul>
-    </li>
-  {/each}
-</ul>
+<Ranking />
 
 <label for="team">{trans("team")}</label>
 <input bind:value={teamName} placeholder="Les Fromages" id="team" />
