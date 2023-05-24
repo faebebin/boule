@@ -5,14 +5,7 @@ import {get} from 'svelte/store'
 import {teams, courts, games} from './store'
 
 export const numberOfRounds = (numberOfTeams: number): number => {
-	// TODO test
-	// Die Potenz „2 hoch Rundenzahl“ muss größer
-	// sein als die Zahl der teilnehmenden Teams. Starten also mehr als 32 aber weniger als 64
-	// Teams, dann reichen 6 Runden, da 2 hoch 6 64 ergibt. Beteiligen sich 10 Teams reichen
-	// 4 Runden aus.
-
-	// return Math.ceil(Math.log2(numberOfTeams))
-	return 5;
+	return Math.floor(Math.log2(numberOfTeams)) + 1
 }
 
 export const rankTeams = (): void => {
