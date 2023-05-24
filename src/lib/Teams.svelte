@@ -2,6 +2,7 @@
   import { teams } from "../store";
   import type { Player, Team } from "../store";
   import { v4 as uuidv4 } from "uuid";
+  import { trans } from "../trans";
 
   let teamList: Team[] = [];
 
@@ -47,7 +48,7 @@
   {/each}
 </ul>
 
-<label for="team">Team</label>
+<label for="team">{trans("team")}</label>
 <input bind:value={teamName} placeholder="Les Fromages" id="team" />
 
 <label for="p1">P1</label>

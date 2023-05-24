@@ -8,9 +8,14 @@ export const numberOfRounds = (numberOfTeams: number): number => {
 	return Math.floor(Math.log2(numberOfTeams)) + 1
 }
 
+export function sortTeams(a: Team, b: Team): number {
+	// export only for testing (TODO avoid)
+	return a.points - b.points;
+}
+
 export const rankTeams = (): void => {
 	teams.update((tl) => {
-		// tl.sort((a, b) => a.points - b.points);
+		tl.sort((a, b) => a.points - b.points);
 		// TODO nach points (hierarchical sort)
 		return tl;
 	})

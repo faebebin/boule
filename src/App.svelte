@@ -1,8 +1,9 @@
 <script lang="ts">
-  import bouleLogo from "/boule.svg";
   import Prepare from "./lib/Prepare.svelte";
   import Ranking from "./lib/Ranking.svelte";
+  import Boules from './lib/Boules.svelte';
   import Play from "./lib/Play.svelte";
+  import { trans } from "./trans";
 
   type Page = "preparation" | "play" | "ranking";
   const pages: Page[] = ["preparation", "play", "ranking"];
@@ -18,20 +19,16 @@
   <ol>
     {#each pages as p}
       <li class="page">
-        <button on:click={() => goTo(p)} disabled={p === page}>{p}</button>
+        <button on:click={() => goTo(p)} disabled={p === page}
+          >{trans(p)}</button
+        >
       </li>
     {/each}
   </ol>
 </nav>
 
+<Boules />
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={bouleLogo} class="logo" alt="Vite Logo" />
-    </a>
-  </div>
-  <h1>Turnier</h1>
-
   {#if page === "preparation"}
     <Prepare />
   {:else if page === "play"}
@@ -42,16 +39,6 @@
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-
   nav {
     border-bottom: 1px solid black;
   }
