@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@types/uuid": "^9.0.1",
+    "svelte-table": "^0.5.11",
     "uuid": "^9.0.0"
   }
 }
