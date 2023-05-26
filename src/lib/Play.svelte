@@ -22,6 +22,7 @@
     // timer off
     // next game
     teams.evaluateRound(get(round));
+    teams.updateRanking();
     page.set("result");
   }
 </script>

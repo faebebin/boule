@@ -22,6 +22,7 @@ export interface Team {
 	members: Player[],
 	points: number
 	name?: string
+	rank?: number
 }
 
 export interface Court {
@@ -55,22 +56,29 @@ function createTeams() {
 			return tl;
 		})
 	}
-	function rankTeams() {
+	function updateRanking() {
 		update((tl) => {
 			tl.sort(
 				(a, b) => a.points - b.points
 			);
-			// TODO nach points (hierarchical sort)
+			// TODO nach game points (hierarchical sort)
+			tl.forEach((team, index) => {
+				team.rank = index + 1;
+			})
 			return tl;
 		})
 	}
 
 
 	function evaluateRound(currentRound: number) {
-		const gamesList = get(games).filter(({round}) => round === currentRound);
+		const gamesOfRound = get(games).filter(({round}) => round === currentRound);
 		teams.update((tl) => {
-			for (const game of gamesList) {
-				// TODO: add points to teams
+			for (const game of gamesOfRound) {
+				if (game.homeScore > game.visitorScore) {
+					tl.find(({id}) => id === game.home).points++;
+				} else {
+					tl.find(({id}) => id === game.visitor).points++;
+				}
 			}
 			return tl
 		})
@@ -82,7 +90,7 @@ function createTeams() {
 		update,
 		loadExampleTeams,
 		evaluateRound,
-		rankTeams,
+		updateRanking,
 	};
 }
 
@@ -134,21 +142,21 @@ function createGames() {
 
 	function createFirstRound() {
 
-		const courtsList = get(courts);
-		const teamsList = get(teams);
+		const courtIds = get(courts).map(({id}) => id);
+		const teamIds = get(teams).map(({id}) => id);
 
-		const shuffledTeams = shuffle(teamsList)
+		const shuffledTeamIds = shuffle(teamIds)
 		const newGames: Game[] = []
 
-		for (var i = 0; i < courtsList.length; i++) {
-			if (teamsList.length < i + 1) break
+		for (var i = 0; i < courtIds.length; i++) {
+			if (teamIds.length < i + 1) break
 			newGames.push({
 				id: uuidv4(),
-				home: shuffledTeams[i].id,
-				visitor: shuffledTeams[i + 1].id,
+				home: shuffledTeamIds[i],
+				visitor: shuffledTeamIds[i + 1],
 				homeScore: 0,
 				visitorScore: 0,
-				court: courtsList[i].id,
+				court: courtIds[i],
 				status: "planned",
 				round: 1,
 			})
@@ -159,11 +167,40 @@ function createGames() {
 
 
 	function createNextRound(round: number) {
-		// TODO
-		// if rounds.length === 0 then Math.random() ... 
 		// 1. Round: Random Games
 		// Following rounds: Match same points. !If played before, match teams with 1 point diff
 		// Nr rounds
+
+		const courtIds = get(courts).map(({id}) => id);
+		const teamIds = get(teams).map(({id}) => id);
+		const seperator = "<-vs->"
+
+		update((gl) => {
+
+			const pairingHistory: string[] = gl.map(({home, visitor}) => `${home}${seperator}${visitor}`
+			)
+
+			for (var i = 0; i < courtIds.length; i++) {
+				if (teamIds.length < i + 1) break
+				const home = teamIds.splice(i, 1)[0]
+				const visitorIndex = teamIds.findIndex((visitor, index) => {
+					return !pairingHistory.includes(`${home}${seperator}${visitor}`)
+				})
+				const visitor = teamIds.splice(visitorIndex, 1)[0]
+				gl.push({
+					id: uuidv4(),
+					home,
+					visitor,
+					homeScore: 0,
+					visitorScore: 0,
+					court: courtIds[i],
+					status: "planned",
+					round,
+				})
+			}
+
+			return gl
+		})
 	}
 
 	return {
@@ -175,11 +212,6 @@ function createGames() {
 }
 
 export const games = createGames();
-
-
-//   export const onClick = () => {
-//     $x.count = $x.count + 1
-//   }
 
 
 // TRANS (https://www.obut.com/en/glossary-of-petanque-terms)
