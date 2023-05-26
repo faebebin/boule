@@ -1,22 +1,37 @@
 <script lang="ts">
   import Teams from "./Teams.svelte";
   import Courts from "./Courts.svelte";
-  import type { Player, Team, Court } from "../store";
-  import { v4 as uuidv4 } from "uuid";
+  import { games, page } from "../store";
   import { courts, teams } from "../store";
+  import Boules from "./Boules.svelte";
 
-  let courtCount: number = 0;
+  $: courtsCount = $courts.length;
+  $: teamsCount = $teams.length;
 
-  courts.subscribe((cl) => {
-    courtCount = cl.length;
-  });
+  function firstRound() {
+    games.createFirstRound();
+    page.set("play");
+  }
 
-  function firstRound() {}
+  // TODO
+  // {#if courtsCount > 0}
+  //   <button on:click={generateCourts}
+  //     >{courtList.length > 0 ? "Re-" : ""}Create Courts</button
+  //   >
+  // {:else}{/if}
 </script>
 
 <Teams />
-<Courts />
+<Courts {teamsCount} />
 
-{#if courtCount > 0}
-  <button on:click={firstRound}>first Round</button>
+{#if teamsCount < 2}
+  <Boules handleClick={teams.loadExampleTeams} title="load example teams" />
+{:else if courtsCount === 0}
+  <Boules
+    handleClick={() => courts.generateCourts(teamsCount)}
+    title="Create Courts"
+  />
+{:else}
+  <Boules handleClick={firstRound} title="Start 1.Round" />
+  <!--TODO recreate courts-->
 {/if}

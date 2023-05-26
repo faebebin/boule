@@ -1,17 +1,13 @@
 <script lang="ts">
   import Prepare from "./lib/Prepare.svelte";
-  import Ranking from "./lib/Ranking.svelte";
-  import Boules from './lib/Boules.svelte';
   import Play from "./lib/Play.svelte";
   import { trans } from "./trans";
+  import { page } from "./store";
+  import type { Page } from "./store";
+  import Result from "./lib/Result.svelte";
 
-  type Page = "preparation" | "play" | "ranking";
-  const pages: Page[] = ["preparation", "play", "ranking"];
-  let page: Page = "preparation";
+  const pages: Page[] = ["preparation", "play", "result"];
 
-  function goTo(p: Page) {
-    page = p;
-  }
   // TODO turnier name etc.
 </script>
 
@@ -19,7 +15,7 @@
   <ol>
     {#each pages as p}
       <li class="page">
-        <button on:click={() => goTo(p)} disabled={p === page}
+        <button on:click={() => page.set(p)} disabled={p === $page}
           >{trans(p)}</button
         >
       </li>
@@ -27,14 +23,13 @@
   </ol>
 </nav>
 
-<Boules />
 <main>
-  {#if page === "preparation"}
+  {#if $page === "preparation"}
     <Prepare />
-  {:else if page === "play"}
+  {:else if $page === "play"}
     <Play />
-  {:else if page === "ranking"}
-    <Ranking />
+  {:else if $page === "result"}
+    <Result />
   {/if}
 </main>
 

@@ -1,44 +1,51 @@
 <script lang="ts">
-  import Teams from "./Teams.svelte";
   import Courts from "./Courts.svelte";
-  import type { Game } from "../store";
-  import { v4 as uuidv4 } from "uuid";
-  import { games } from "../store";
+  import { teams, type Game, page } from "../store";
+  import { games, round } from "../store";
   import { get } from "svelte/store";
-  import { evaluateRound, prepareNextRound, rankTeams } from "../utils";
+  import { range } from "lodash";
+  import Boules from "./Boules.svelte";
 
-  let gameList: Game[] = [];
+  const maxRound = Math.max(...$games.map(({ round }) => round));
+  const rounds = range(1, maxRound);
 
-  games.subscribe((gl) => {
-    gameList = gl;
-  });
-
-  const round = Math.max(...gameList.map(({ round }) => round));
+  // TODO get phase from games(round)
+  let phase: Game["status"] = "planned";
 
   function start() {
     // timer on
   }
   function stop() {
     // timer off
-    evaluateRound(round);
   }
-  function next() {
+  function evaluateRound() {
     // timer off
     // next game
-    prepareNextRound(round + 1);
+    teams.evaluateRound(get(round));
+    page.set("result");
   }
 </script>
 
 <nav class="crumbs">
   <ol>
-    <li class="crumb"><button on:click={() => {}}>Round 1</button></li>
-    <li class="crumb"><button on:click={() => {}}>Round 2</button></li>
+    {#each rounds as r}
+      <li class="crumb">
+        <button on:click={() => round.set(r)}>Round {1}</button>
+      </li>
+    {/each}
   </ol>
 </nav>
 
-<div>Games list Cards here</div>
+<Courts />
 
-<button on:click={() => {}}>first Round</button>
+{#if phase === "planned"}
+  <Boules handleClick={start} title="Start Game" />
+{:else if phase === "stopped"}
+  <!--TODO resuem-->
+  <Boules handleClick={stop} title="Stop Game" />
+{:else}
+  <Boules handleClick={evaluateRound} title="Evaluate Round" />
+{/if}
 
 <style>
   nav {

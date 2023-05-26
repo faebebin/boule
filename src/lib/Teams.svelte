@@ -3,7 +3,6 @@
   import type { Player, Team } from "../store";
   import { v4 as uuidv4 } from "uuid";
   import { trans } from "../trans";
-  import { example_teams } from "../fixtures/teams";
   import Ranking from "./Ranking.svelte";
 
   let teamList: Team[] = [];
@@ -36,13 +35,6 @@
 
     [teamName, p1Name, p2Name] = ["", "", ""];
   }
-
-  function loadExampleTeams() {
-    teams.update((tl) => {
-      tl.push(...example_teams);
-      return tl;
-    });
-  }
 </script>
 
 <Ranking />
@@ -73,5 +65,3 @@
 {#if p1Name.length >= 2 && p2Name.length >= 2}
   <button on:click={addTeam}> + </button>
 {/if}
-
-<button on:click={loadExampleTeams}>Load example teams </button>

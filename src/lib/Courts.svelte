@@ -2,44 +2,70 @@
   import { courts, teams } from "../store";
   import type { Court } from "../store";
   import { v4 as uuidv4 } from "uuid";
+  import { flip } from "svelte/animate";
 
+  const dragDuration = 300;
   let courtList: Court[] = [];
   let courtCount: number = 0;
 
-  teams.subscribe((tl) => {
-    // TODO more elegant
-    // Make editable with each and bind:
-    courtCount = Math.floor(tl.length / 2);
-  });
+  let draggingCard;
+  let animatingCards = new Set();
+
+  export let teamsCount = 0;
+
+  function swapWith(card) {
+    if (draggingCard === card || animatingCards.has(card)) return;
+    animatingCards.add(card);
+    setTimeout(() => animatingCards.delete(card), dragDuration);
+    const cardAIndex = courtList.indexOf(draggingCard);
+    const cardBIndex = courtList.indexOf(card);
+    courtList[cardAIndex] = card;
+    courtList[cardBIndex] = draggingCard;
+  }
 
   courts.subscribe((cl) => {
     courtList = cl;
   });
-
-  function generateCourts() {
-    courtList = [];
-    for (let i = 0; i < courtCount; i++) {
-      courtList.push({ id: uuidv4(), name: `Platz ${i + 1}` });
-    }
-
-    courts.set(courtList);
-  }
 </script>
 
 {#if courtList.length > 0}
-  <ul>
-    {#each courtList as { name }}
-      <li>
-        <ul>
-          {name}
-        </ul>
-      </li>
+  <div class="container">
+    {#each courtList as court (court.id)}
+      <div
+        animate:flip={{ duration: dragDuration }}
+        class="card gravel"
+        draggable="true"
+        on:dragstart={() => (draggingCard = court.name)}
+        on:dragend={() => (draggingCard = undefined)}
+        on:dragenter={() => swapWith(court)}
+        on:dragover|preventDefault
+      >
+        {court.name}
+      </div>
     {/each}
-  </ul>
+  </div>
 {/if}
 
-{#if courtCount > 0}
-  <button on:click={generateCourts} disabled={courtList.length > 0}
-    >{courtList.length > 0 ? "Adapt (TODO)" : "Create"} Courts</button
-  >
-{/if}
+<style>
+  .container {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+
+  .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: darkblue;
+    width: 100%;
+    height: 96px;
+    font-size: 1.5rem;
+  }
+
+  .gravel {
+    background: rgb(235, 225, 227);
+    background-image: url(assets/noise.png);
+  }
+</style>

@@ -1,5 +1,7 @@
-import {writable} from 'svelte/store';
-import type {nextRound, numberOfRounds} from './utils';
+import {writable, derived, get} from 'svelte/store';
+import type {numberOfRounds} from './utils';
+import {shuffle} from 'lodash'
+import {example_teams} from "./fixtures/teams";
 
 import {v4 as uuidv4} from 'uuid';
 import type {v4 as UUIDV4} from 'uuid';
@@ -36,9 +38,56 @@ export interface Game {
 	homeScore: number,
 	visitorScore: number,
 	court: Court["id"],
-	status: "planned" | "running" | "paused" | "finished",
+	status: "planned" | "running" | "stopped" | "finished",
 	round: number,
 }
+
+export type Page = "preparation" | "play" | "result";
+
+export const page = writable<Page>("preparation");
+
+function createTeams() {
+	const {subscribe, set, update} = writable<Team[]>([]);
+
+	function loadExampleTeams() {
+		update((tl) => {
+			tl.push(...example_teams);
+			return tl;
+		})
+	}
+	function rankTeams() {
+		update((tl) => {
+			tl.sort(
+				(a, b) => a.points - b.points
+			);
+			// TODO nach points (hierarchical sort)
+			return tl;
+		})
+	}
+
+
+	function evaluateRound(currentRound: number) {
+		const gamesList = get(games).filter(({round}) => round === currentRound);
+		teams.update((tl) => {
+			for (const game of gamesList) {
+				// TODO: add points to teams
+			}
+			return tl
+		})
+	}
+
+
+	return {
+		subscribe,
+		update,
+		loadExampleTeams,
+		evaluateRound,
+		rankTeams,
+	};
+}
+
+export const teams = createTeams();
+
 
 export interface Tournament {
 	id: ID,
@@ -48,15 +97,85 @@ export interface Tournament {
 	teams: Team["id"][]
 }
 
-export const teams = writable<Team[]>([])
 
-export const courts = writable<Court[]>([])
+function createCourts() {
+	const {subscribe, set, update} = writable<Court[]>([]);
 
-export const games = writable<Game[]>([])
 
-export const rounds = writable<Game[]>([])
+	function generateCourts(teamsCount: number) {
+
+		const numberCourtsToCreate = Math.floor(teamsCount / 2);
+		const courtList = [];
+		for (let i = 0; i < numberCourtsToCreate; i++) {
+			courtList.push({id: uuidv4(), name: `Platz ${i + 1}`});
+		}
+
+		set(courtList);
+	}
+
+	return {
+		subscribe,
+		update,
+		generateCourts,
+	};
+
+
+}
+
+export const courts = createCourts()
+
 
 export const tournament = writable<Tournament>()
+
+export const round = writable<number>(1)
+
+function createGames() {
+	const {subscribe, set, update} = writable<Game[]>([]);
+
+	function createFirstRound() {
+
+		const courtsList = get(courts);
+		const teamsList = get(teams);
+
+		const shuffledTeams = shuffle(teamsList)
+		const newGames: Game[] = []
+
+		for (var i = 0; i < courtsList.length; i++) {
+			if (teamsList.length < i + 1) break
+			newGames.push({
+				id: uuidv4(),
+				home: shuffledTeams[i].id,
+				visitor: shuffledTeams[i + 1].id,
+				homeScore: 0,
+				visitorScore: 0,
+				court: courtsList[i].id,
+				status: "planned",
+				round: 1,
+			})
+		}
+
+		set(newGames)
+	}
+
+
+	function createNextRound(round: number) {
+		// TODO
+		// if rounds.length === 0 then Math.random() ... 
+		// 1. Round: Random Games
+		// Following rounds: Match same points. !If played before, match teams with 1 point diff
+		// Nr rounds
+	}
+
+	return {
+		subscribe,
+		update,
+		createFirstRound,
+		createNextRound
+	};
+}
+
+export const games = createGames();
+
 
 //   export const onClick = () => {
 //     $x.count = $x.count + 1
