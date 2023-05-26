@@ -13,6 +13,8 @@ const TRANS = {
 	"wins" : "Victoires",
 	"players": "joueuses / joueurs",
 	"name": "nom",
+	"result": "résultat (prov)",
+	"result_prov": "résultat intermédiaire",
 }
 // NOTES:
 // * Slang, idiomatic, colloquial or regional term/expression (generally originating from the area between Marseille and La Ciotat). 

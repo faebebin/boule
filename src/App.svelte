@@ -9,6 +9,16 @@
   const pages: Page[] = ["preparation", "play", "result"];
 
   // TODO turnier name etc.
+
+  // Workflow
+  // 1. Prepare:  Teams and Courts
+  //  => create first round
+  // 2. Play: start, stop
+  //  => evaluate
+  // 3. prov. Result:
+  //  => next round
+  // 2. ... 3.
+  //  => final Result!
 </script>
 
 <nav class="pages">
