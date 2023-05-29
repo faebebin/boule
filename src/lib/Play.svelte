@@ -1,16 +1,22 @@
 <script lang="ts">
   import Courts from "./Courts.svelte";
-  import { teams, type Game, page } from "../store";
-  import { games, round } from "../store";
+  import { teams, type Game, page, games, round } from "../store";
   import { get } from "svelte/store";
   import { range } from "lodash";
   import Boules from "./Boules.svelte";
 
-  const maxRound = Math.max(...$games.map(({ round }) => round));
+  const maxRound = Math.max(...$games.map(({ round }) => round)); // TODO maxrounds from start
   const rounds = range(1, maxRound);
 
   // TODO get phase from games(round)
   let phase: Game["status"] = "planned";
+
+  // TODO check if `derived` store makes sense?
+  let gamesOfRound: Game[] = [];
+
+  games.subscribe((gl) => {
+    gamesOfRound = gl.filter(({ round }) => round === round);
+  });
 
   function start() {
     // timer on
@@ -37,7 +43,14 @@
   </ol>
 </nav>
 
-<Courts />
+<div class="container">
+  {#each gamesOfRound as { court, homeScore, visitorScore, id } (id)}
+    <div class="card gravel">
+      <p>{court}</p>
+      <p>{`${homeScore} : ${visitorScore}`}</p>
+    </div>
+  {/each}
+</div>
 
 {#if phase === "planned"}
   <Boules handleClick={start} title="Start Game" />

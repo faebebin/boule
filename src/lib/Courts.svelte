@@ -47,23 +47,6 @@
 {/if}
 
 <style>
-  .container {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(5, 1fr);
-    gap: 24px;
-  }
-
-  .card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: darkblue;
-    width: 100%;
-    height: 96px;
-    font-size: 1.5rem;
-  }
-
   .gravel {
     background: rgb(235, 225, 227);
     background-image: url(assets/noise.png);

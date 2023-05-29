@@ -48,7 +48,7 @@ export type Page = "preparation" | "play" | "result";
 export const page = writable<Page>("preparation");
 
 function createTeams() {
-	const {subscribe, set, update} = writable<Team[]>([]);
+	const {subscribe, update} = writable<Team[]>([]);
 
 	function loadExampleTeams() {
 		update((tl) => {
@@ -71,6 +71,7 @@ function createTeams() {
 
 
 	function evaluateRound(currentRound: number) {
+		// TODO check if `derived` makes sense?
 		const gamesOfRound = get(games).filter(({round}) => round === currentRound);
 		teams.update((tl) => {
 			for (const game of gamesOfRound) {
