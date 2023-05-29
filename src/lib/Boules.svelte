@@ -4,7 +4,7 @@
   export let title = "click me";
 </script>
 
-<button class="boules" on:click={handleClick}>
+<button class="boules" on:click={handleClick} draggable="true">
   {title}
 </button>
 

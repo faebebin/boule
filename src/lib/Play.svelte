@@ -4,7 +4,8 @@
   import { get } from "svelte/store";
   import { range } from "lodash";
   import Boules from "./Boules.svelte";
-  import { Input, InputAddonItem } from "agnostic-svelte";
+  import { Card } from "agnostic-svelte";
+  import { trans } from "../trans";
 
   const maxRound = Math.max(...$games.map(({ round }) => round)); // TODO maxrounds from start
   const rounds = range(1, maxRound);
@@ -16,14 +17,16 @@
   let gamesOfRound: Game[] = [];
 
   games.subscribe((gl) => {
-    gamesOfRound = gl.filter(({ round }) => round === round);
+    gamesOfRound = gl.filter((g) => g.round === $round);
   });
 
   function start() {
     // timer on
+    phase = "running";
   }
   function stop() {
     // timer off
+    phase = "stopped";
   }
   function evaluateRound() {
     // timer off
@@ -46,41 +49,49 @@
 
 <div class="container">
   {#each gamesOfRound as { court, homeScore, visitorScore, id } (id)}
-    <div class="card gravel">
-      <p>{court}</p>
+    <Card
+      isStacked={true}
+      isShadow={true}
+      isAnimated={true}
+      isBorder={true}
+      isRounded={true}
+    >
+      <div class="gravel">
+        <p>TODO court name</p>
 
-      <label for="home">Home</label>
-      <input
-        class="input"
-        id="home"
-        bind:value={homeScore}
-        required
-        type="number"
-        min="0"
-        max="13"
-      />
+        <label for="home">Home</label>
+        <input
+          class="input"
+          id="home"
+          bind:value={homeScore}
+          required
+          type="number"
+          min="0"
+          max="13"
+        />
 
-      <label for="visitor">Visitor</label>
-      <input
-        class="input"
-        id="visitor"
-        bind:value={visitorScore}
-        required
-        type="number"
-        min="0"
-        max="13"
-      />
-    </div>
+        <label for="visitor">Visitor</label>
+        <input
+          class="input"
+          id="visitor"
+          bind:value={visitorScore}
+          required
+          type="number"
+          min="0"
+          max="13"
+        />
+      </div>
+    </Card>
   {/each}
 </div>
 
 {#if phase === "planned"}
   <Boules handleClick={start} title="Start Game" />
+{:else if phase === "running"}
+  <Boules handleClick={stop} title="Stop Game" />
 {:else if phase === "stopped"}
   <!--TODO resuem-->
-  <Boules handleClick={stop} title="Stop Game" />
-{:else}
-  <Boules handleClick={evaluateRound} title="Evaluate Round" />
+  <Boules handleClick={evaluateRound} title={trans("evaluate_games")} />
 {/if}
 
 <style>

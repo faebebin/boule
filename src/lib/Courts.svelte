@@ -45,10 +45,3 @@
     {/each}
   </div>
 {/if}
-
-<style>
-  .gravel {
-    background: rgb(235, 225, 227);
-    background-image: url(assets/noise.png);
-  }
-</style>
