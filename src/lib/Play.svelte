@@ -4,6 +4,7 @@
   import { get } from "svelte/store";
   import { range } from "lodash";
   import Boules from "./Boules.svelte";
+  import { Input, InputAddonItem } from "agnostic-svelte";
 
   const maxRound = Math.max(...$games.map(({ round }) => round)); // TODO maxrounds from start
   const rounds = range(1, maxRound);
@@ -47,7 +48,28 @@
   {#each gamesOfRound as { court, homeScore, visitorScore, id } (id)}
     <div class="card gravel">
       <p>{court}</p>
-      <p>{`${homeScore} : ${visitorScore}`}</p>
+
+      <label for="home">Home</label>
+      <input
+        class="input"
+        id="home"
+        bind:value={homeScore}
+        required
+        type="number"
+        min="0"
+        max="13"
+      />
+
+      <label for="visitor">Visitor</label>
+      <input
+        class="input"
+        id="visitor"
+        bind:value={visitorScore}
+        required
+        type="number"
+        min="0"
+        max="13"
+      />
     </div>
   {/each}
 </div>

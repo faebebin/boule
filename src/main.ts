@@ -1,4 +1,5 @@
 import './app.css'
+import 'agnostic-svelte/css/common.min.css';
 import App from './App.svelte'
 
 const app = new App({
