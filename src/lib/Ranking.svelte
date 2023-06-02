@@ -2,15 +2,9 @@
   import { teams } from "../store";
   import SvelteTable from "svelte-table";
   import { trans } from "../trans";
+  export let showRank = false;
 
   const columns = [
-   {
-      key: "rank",
-      label: "Rank",
-      title: "rank",
-      value: (row) => row.rank,
-      sortable: true,
-    },
     {
       key: "name",
       label: "Name",
@@ -33,6 +27,16 @@
       sortable: true,
     },
   ];
+
+  if (showRank) {
+    columns.unshift({
+      key: "rank",
+      label: "Rank",
+      title: "rank",
+      value: (row) => row.rank,
+      sortable: true,
+    });
+  }
 </script>
 
 <SvelteTable rows={$teams} {columns} />

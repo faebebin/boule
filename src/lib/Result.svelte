@@ -19,7 +19,7 @@
   }
 </script>
 
-<Ranking />
+<Ranking showRank />
 
 {#if lastRound}
   <Boules title="Juhu !!!" />
