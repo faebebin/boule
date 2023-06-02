@@ -28,12 +28,10 @@
     border-radius: 80px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
-    background: radial-gradient(circle, #dddddd, #999999);
+    background: radial-gradient(circle at 80% 20%, #f3f1f1, #999999);
     box-shadow: -5px 10px 12px rgba(0, 0, 0, 0.2);
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
     cursor: pointer;
+    color: #888787;
     transition: border-color 0.25s;
     display: flex;
     justify-content: center;
@@ -53,6 +51,9 @@
   }
 
   .title {
+    font-weight: 700;
+    font-family: inherit;
+    font-size: 1.2em;
   }
 
   .info {
