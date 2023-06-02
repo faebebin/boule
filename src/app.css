@@ -95,3 +95,11 @@ button:focus-visible {
   background: rgb(235, 225, 227);
   background-image: url(assets/noise.png);
 }
+
+td {
+  text-align: left;
+}
+
+th {
+  text-align: left;
+}
