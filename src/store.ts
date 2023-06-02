@@ -1,4 +1,4 @@
-import {writable, derived, get} from 'svelte/store';
+import {writable, derived, get, readable} from 'svelte/store';
 import type {numberOfRounds} from './utils';
 import {shuffle} from 'lodash'
 import {example_teams} from "./fixtures/teams";
@@ -215,4 +215,20 @@ function createGames() {
 export const games = createGames();
 
 
-// TRANS (https://www.obut.com/en/glossary-of-petanque-terms)
+export const time = readable(0, function start(set) {
+	const beginning = new Date();
+	const beginningTime = beginning.getTime();
+
+	const interval = setInterval(() => {
+		const current = new Date();
+		const currentTime = current.getTime();
+		set(currentTime - beginningTime);
+	}, 1000);
+
+	return function stop() {
+		// ! forcedly set the readable value to 0 before clearing the interval
+		// it seems the store would otherwise retain the last value and the application would stagger from this value straight to 0
+		set(0);
+		clearInterval(interval);
+	};
+});

@@ -1,11 +1,12 @@
 <script lang="ts">
   import Courts from "./Courts.svelte";
-  import { teams, type Game, page, games, round } from "../store";
+  import { time, teams, type Game, page, games, round } from "../store";
   import { get } from "svelte/store";
   import { range } from "lodash";
   import Boules from "./Boules.svelte";
   import { Card } from "agnostic-svelte";
   import { trans } from "../trans";
+  import { formatTime } from "../utils";
 
   const maxRound = Math.max(...$games.map(({ round }) => round)); // TODO maxrounds from start
   const rounds = range(1, maxRound);
@@ -20,12 +21,17 @@
     gamesOfRound = gl.filter((g) => g.round === $round);
   });
 
+  $: elapsed = 0;
+  let unsubscribe = null; // from timer
+
   function start() {
-    // timer on
+    unsubscribe = time.subscribe((value) => {
+      elapsed = value;
+    });
     phase = "running";
   }
   function stop() {
-    // timer off
+    unsubscribe();
     phase = "stopped";
   }
   function evaluateRound() {
@@ -86,12 +92,16 @@
 </div>
 
 {#if phase === "planned"}
-  <Boules handleClick={start} title="Start Game" />
+  <Boules handleClick={start} title="Start Game" info={formatTime(elapsed)} />
 {:else if phase === "running"}
-  <Boules handleClick={stop} title="Stop Game" />
+  <Boules handleClick={stop} title="Stop Game" info={formatTime(elapsed)} />
 {:else if phase === "stopped"}
   <!--TODO resuem-->
-  <Boules handleClick={evaluateRound} title={trans("evaluate_games")} />
+  <Boules
+    handleClick={evaluateRound}
+    title={trans("evaluate_games")}
+    info={formatTime(elapsed)}
+  />
 {/if}
 
 <style>
