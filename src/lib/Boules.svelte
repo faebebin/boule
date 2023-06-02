@@ -1,5 +1,4 @@
 <script lang="ts">
-  import bouleLogo from "/boule.svg";
   export let handleClick = () => {};
   export let title = "click me";
   export let info = null;
@@ -29,7 +28,8 @@
     border-radius: 80px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
-    background-color: hsla(0, 0%, 10%, 0.226);
+    background: radial-gradient(circle, #dddddd, #999999);
+    box-shadow: -5px 10px 12px rgba(0, 0, 0, 0.2);
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
