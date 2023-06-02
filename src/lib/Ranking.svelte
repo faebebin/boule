@@ -4,6 +4,13 @@
   import { trans } from "../trans";
 
   const columns = [
+   {
+      key: "rank",
+      label: "Rank",
+      title: "rank",
+      value: (row) => row.rank,
+      sortable: true,
+    },
     {
       key: "name",
       label: "Name",

@@ -59,7 +59,7 @@ function createTeams() {
 	function updateRanking() {
 		update((tl) => {
 			tl.sort(
-				(a, b) => a.points - b.points
+				(a, b) => b.points - a.points
 			);
 			// TODO nach game points (hierarchical sort)
 			tl.forEach((team, index) => {
