@@ -9,8 +9,6 @@
     rounds,
     courts,
   } from "../store";
-  import { get } from "svelte/store";
-  import { range } from "lodash";
   import Boules from "./Boules.svelte";
   import { Card } from "agnostic-svelte";
   import { trans } from "../trans";
@@ -56,16 +54,6 @@
     return $courts.find(({ id }) => id === court_id);
   }
 </script>
-
-<nav class="crumbs">
-  <ol>
-    {#each range(1, $rounds[1]) as r}
-      <li class="crumb">
-        <button on:click={() => rounds.current(r)}>{r}</button>
-      </li>
-    {/each}
-  </ol>
-</nav>
 
 <div class="container">
   {#each gamesOfRound as { court, home, visitor, homeScore, visitorScore, id }, index (id)}
@@ -117,27 +105,3 @@
     info={formatTime(elapsed)}
   />
 {/if}
-
-<style>
-  nav {
-    border-bottom: 1px solid black;
-  }
-
-  .crumbs ol {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  .crumb {
-    display: inline-block;
-  }
-
-  .crumb button::after {
-    display: inline-block;
-    color: #000;
-    content: ">";
-    font-size: 80%;
-    font-weight: bold;
-    padding: 0 3px;
-  }
-</style>

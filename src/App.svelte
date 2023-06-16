@@ -1,12 +1,15 @@
 <script lang="ts">
   import Prepare from "./lib/Prepare.svelte";
+  import { range } from "lodash";
   import Play from "./lib/Play.svelte";
   import { trans } from "./trans";
-  import { page } from "./store";
+  import { page, rounds } from "./store";
+  import { get } from "svelte/store";
   import type { Page } from "./store";
   import Result from "./lib/Result.svelte";
 
   const pages: Page[] = ["preparation", "play", "result"];
+  const [currentRound, maxRounds] = get(rounds);
 
   // TODO turnier name etc.
 
@@ -43,17 +46,42 @@
   {/if}
 </main>
 
+{#if maxRounds > 0}
+  <nav class="crumbs">
+    <ol>
+      <li class="crumb">Round</li>
+      {#each range(1, $rounds[1] + 1) as r}
+        <li class="crumb">
+          <button on:click={() => rounds.current(r)}>{r}</button>
+        </li>
+      {/each}
+    </ol>
+  </nav>
+{/if}
+
 <style>
-  nav {
+  .pages {
     border-bottom: 1px solid black;
   }
-
   .pages ol {
     list-style-type: none;
     padding-left: 0;
   }
 
   .page {
+    display: inline-block;
+  }
+
+  .crumbs {
+    position: fixed;
+    bottom: 0px;
+  }
+  .crumbs ol {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .crumb {
     display: inline-block;
   }
 </style>

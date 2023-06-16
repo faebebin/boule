@@ -13,8 +13,8 @@ const TRANS = {
 	"wins": "Victoires",
 	"players": "joueuses / joueurs",
 	"name": "nom",
-	"result": "résultat (prov)",
-	"result_prov": "résultat intermédiaire",
+	"result": "résultat",
+	"result_prov": "résultat (prov)",
 	"evaluate_games": "évaluer les jeux"
 }
 // NOTES:

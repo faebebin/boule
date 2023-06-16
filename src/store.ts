@@ -144,13 +144,14 @@ function createRounds() {
 
 	function next() {
 		update(([current, max]) => {
-			return [current + 1, max]
+			const next = current < max ? current + 1 : max
+			return [next, max]
 		})
 	}
 
 	function prev() {
 		update(([current, max]) => {
-			const prev = current > 1 ? current - 1 : current
+			const prev = current > 1 ? current - 1 : 1
 			return [prev, max]
 		})
 	}
