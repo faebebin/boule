@@ -1,15 +1,20 @@
 <script lang="ts">
   import Courts from "./Courts.svelte";
-  import { time, teams, type Game, page, games, round, courts } from "../store";
+  import {
+    time,
+    teams,
+    type Game,
+    page,
+    games,
+    rounds,
+    courts,
+  } from "../store";
   import { get } from "svelte/store";
   import { range } from "lodash";
   import Boules from "./Boules.svelte";
   import { Card } from "agnostic-svelte";
   import { trans } from "../trans";
   import { formatTime } from "../utils";
-
-  const maxRound = Math.max(...$games.map(({ round }) => round)); // TODO maxrounds from start
-  const rounds = range(1, maxRound);
 
   // TODO get phase from games(round)
   let phase: Game["status"] = "planned";
@@ -19,7 +24,7 @@
   games.subscribe((gl) => {
     // TODO check if `derived` store makes sense?
     // ... or custom method that add team names ...
-    gamesOfRound = gl.filter((g) => g.round === $round);
+    gamesOfRound = gl.filter((g) => g.round === $rounds[0]);
   });
 
   $: elapsed = 0;
@@ -38,7 +43,7 @@
   function evaluateRound() {
     // timer off
     // next game
-    teams.evaluateRound(get(round));
+    teams.evaluateRound();
     teams.updateRanking();
     page.set("result");
   }
@@ -54,9 +59,9 @@
 
 <nav class="crumbs">
   <ol>
-    {#each rounds as r}
+    {#each range(1, $rounds[1]) as r}
       <li class="crumb">
-        <button on:click={() => round.set(r)}>Round {1}</button>
+        <button on:click={() => rounds.current(r)}>{r}</button>
       </li>
     {/each}
   </ol>

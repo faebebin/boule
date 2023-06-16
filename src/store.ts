@@ -1,5 +1,5 @@
 import {writable, derived, get, readable} from 'svelte/store';
-import type {numberOfRounds} from './utils';
+import {numberOfRounds} from './utils';
 import {shuffle} from 'lodash'
 import {example_teams} from "./fixtures/teams";
 
@@ -56,7 +56,7 @@ function createTeams() {
 			return tl;
 		})
 	}
-	
+
 	function updateRanking() {
 		update((tl) => {
 			tl.sort(
@@ -71,8 +71,9 @@ function createTeams() {
 	}
 
 
-	function evaluateRound(currentRound: number) {
+	function evaluateRound() {
 		// TODO check if `derived` makes sense?
+		const currentRound = get(rounds)[0]
 		const gamesOfRound = get(games).filter(({round}) => round === currentRound);
 		teams.update((tl) => {
 			for (const game of gamesOfRound) {
@@ -111,7 +112,6 @@ export interface Tournament {
 function createCourts() {
 	const {subscribe, set, update} = writable<Court[]>([]);
 
-
 	function generateCourts(teamsCount: number) {
 
 		const numberCourtsToCreate = Math.floor(teamsCount / 2);
@@ -128,16 +128,51 @@ function createCourts() {
 		update,
 		generateCourts,
 	};
-
-
 }
+
 
 export const courts = createCourts()
 
-
 export const tournament = writable<Tournament>()
 
-export const round = writable<number>(1)
+function createRounds() {
+	const {subscribe, set, update} = writable<[number, number]>([1, 0]); // [current, max]
+
+	function initRounds(teamsCount: number) {
+		set([1, numberOfRounds(teamsCount)]);
+	}
+
+	function next() {
+		update(([current, max]) => {
+			return [current + 1, max]
+		})
+	}
+
+	function prev() {
+		update(([current, max]) => {
+			const prev = current > 1 ? current - 1 : current
+			return [prev, max]
+		})
+	}
+
+	function current(round: number) {
+		update(([_, max]) => {
+			return [round, max]
+		})
+	}
+
+	return {
+		set,
+		subscribe,
+		update,
+		initRounds,
+		next,
+		prev,
+		current
+	};
+}
+
+export const rounds = createRounds()
 
 function createGames() {
 	const {subscribe, set, update} = writable<Game[]>([]);

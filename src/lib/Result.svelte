@@ -1,19 +1,18 @@
 <script lang="ts">
   import Courts from "./Courts.svelte";
   import { teams, type Game, page } from "../store";
-  import { games, round } from "../store";
+  import { games, rounds } from "../store";
   import { get } from "svelte/store";
   import { range } from "lodash";
   import Boules from "./Boules.svelte";
   import Ranking from "./Ranking.svelte";
 
-  const maxRound = 5; // TODO form tournament
-  $: nextRound = get(round) + 1;
-  const rounds = range(1, maxRound);
-  const lastRound = $round === maxRound;
+  const [current, max] = $rounds;
+  const nextRound = current + 1;
+  let isFinalRound = current === max;
 
   function createNextRound() {
-    round.set(nextRound);
+    rounds.next();
     games.createNextRound(nextRound);
     page.set("play");
   }
@@ -21,10 +20,10 @@
 
 <Ranking showRank />
 
-{#if lastRound}
+{#if isFinalRound}
   <Boules title="Juhu !!!" />
 {:else}
-  <Boules handleClick={createNextRound} title="Next Round" />
+  <Boules handleClick={createNextRound} title={`Next Round ${nextRound}`} />
 {/if}
 
 <style>
