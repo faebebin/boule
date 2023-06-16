@@ -13,13 +13,6 @@
       sortable: true,
     },
     {
-      key: "points",
-      label: "Points",
-      title: trans("wins"),
-      value: (row) => row.points,
-      sortable: true,
-    },
-    {
       key: "members",
       label: "Members",
       title: trans("players"),
@@ -29,13 +22,22 @@
   ];
 
   if (showRank) {
-    columns.unshift({
-      key: "rank",
-      label: "Rank",
-      title: "rank",
-      value: (row) => row.rank,
-      sortable: true,
-    });
+    columns.unshift(
+      {
+        key: "rank",
+        label: "Rank",
+        title: "rank",
+        value: (row) => row.rank,
+        sortable: true,
+      },
+      {
+        key: "points",
+        label: "Points",
+        title: trans("wins"),
+        value: (row) => row.points,
+        sortable: true,
+      }
+    );
   }
 </script>
 

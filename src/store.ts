@@ -56,6 +56,7 @@ function createTeams() {
 			return tl;
 		})
 	}
+	
 	function updateRanking() {
 		update((tl) => {
 			tl.sort(

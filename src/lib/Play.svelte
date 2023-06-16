@@ -1,6 +1,6 @@
 <script lang="ts">
   import Courts from "./Courts.svelte";
-  import { time, teams, type Game, page, games, round } from "../store";
+  import { time, teams, type Game, page, games, round, courts } from "../store";
   import { get } from "svelte/store";
   import { range } from "lodash";
   import Boules from "./Boules.svelte";
@@ -14,10 +14,11 @@
   // TODO get phase from games(round)
   let phase: Game["status"] = "planned";
 
-  // TODO check if `derived` store makes sense?
   let gamesOfRound: Game[] = [];
 
   games.subscribe((gl) => {
+    // TODO check if `derived` store makes sense?
+    // ... or custom method that add team names ...
     gamesOfRound = gl.filter((g) => g.round === $round);
   });
 
@@ -41,6 +42,14 @@
     teams.updateRanking();
     page.set("result");
   }
+
+  function getTeamById(team_id: string) {
+    return $teams.find(({ id }) => id === team_id);
+  }
+
+  function getCourtById(court_id: string) {
+    return $courts.find(({ id }) => id === court_id);
+  }
 </script>
 
 <nav class="crumbs">
@@ -54,7 +63,7 @@
 </nav>
 
 <div class="container">
-  {#each gamesOfRound as { court, homeScore, visitorScore, id } (id)}
+  {#each gamesOfRound as { court, home, visitor, homeScore, visitorScore, id }, index (id)}
     <Card
       isStacked={true}
       isShadow={true}
@@ -63,9 +72,9 @@
       isRounded={true}
     >
       <div class="gravel">
-        <p>TODO court name</p>
+        <p>{getCourtById(court)?.name || `Platz ${index}`}</p>
 
-        <label for="home">Home</label>
+        <label for="home">{getTeamById(home).name}</label>
         <input
           class="input"
           id="home"
@@ -76,7 +85,7 @@
           max="13"
         />
 
-        <label for="visitor">Visitor</label>
+        <label for="visitor">{getTeamById(visitor).name}</label>
         <input
           class="input"
           id="visitor"
