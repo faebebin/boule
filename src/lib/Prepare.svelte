@@ -27,7 +27,7 @@
 </script>
 
 <Teams />
-<Courts {teamsCount} />
+<Courts />
 
 {#if teamsCount < 2}
   <Boules handleClick={teams.loadExampleTeams} title="load example teams" />

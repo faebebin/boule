@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Courts from "./Courts.svelte";
   import {
     time,
     teams,
@@ -10,7 +9,7 @@
     courts,
   } from "../store";
   import Boules from "./Boules.svelte";
-  import { Card } from "agnostic-svelte";
+  import Court from "./Court.svelte";
   import { trans } from "../trans";
   import { formatTime } from "../utils";
 
@@ -46,50 +45,14 @@
     page.set("result");
   }
 
-  function getTeamById(team_id: string) {
-    return $teams.find(({ id }) => id === team_id);
-  }
-
   function getCourtById(court_id: string) {
     return $courts.find(({ id }) => id === court_id);
   }
 </script>
 
 <div class="container">
-  {#each gamesOfRound as { court, home, visitor, homeScore, visitorScore, id }, index (id)}
-    <Card
-      isStacked={true}
-      isShadow={true}
-      isAnimated={true}
-      isBorder={true}
-      isRounded={true}
-    >
-      <div class="gravel">
-        <p>{getCourtById(court)?.name || `Platz ${index}`}</p>
-
-        <label for="home">{getTeamById(home).name}</label>
-        <input
-          class="input"
-          id="home"
-          bind:value={homeScore}
-          required
-          type="number"
-          min="0"
-          max="13"
-        />
-
-        <label for="visitor">{getTeamById(visitor).name}</label>
-        <input
-          class="input"
-          id="visitor"
-          bind:value={visitorScore}
-          required
-          type="number"
-          min="0"
-          max="13"
-        />
-      </div>
-    </Card>
+  {#each gamesOfRound as game, index (game.id)}
+    <Court court={getCourtById(game.court)} {game} />
   {/each}
 </div>
 
