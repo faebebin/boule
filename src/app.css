@@ -49,10 +49,6 @@ h1 {
   text-align: center;
 }
 
-main {
-  margin-top: 1rem;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -108,12 +104,9 @@ button:disabled:hover {
   background-image: url(assets/noise.png);
 }
 
-td {
+th, td {
   text-align: left;
-}
-
-th {
-  text-align: left;
+  border-bottom: 1px solid rgba(201, 201, 201, 0.714);
 }
 
 /* override "agnostic-svelte" */

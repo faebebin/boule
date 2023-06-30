@@ -71,6 +71,13 @@
 {/if}
 
 <style>
+  main {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .pages {
     border-bottom: 1px solid black;
   }

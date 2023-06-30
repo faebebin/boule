@@ -1,6 +1,7 @@
 <script lang="ts">
   import { teams } from "../store";
   import SvelteTable from "svelte-table";
+  // import { Table } from "agnostic-svelte"; TODO try 
   import { trans } from "../trans";
   export let showRank = false;
 
