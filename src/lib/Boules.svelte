@@ -22,7 +22,8 @@
   .boule {
     position: fixed;
     top: 10px;
-    right: 10px;
+    /* TODO css variable in app.css */
+    right: calc((100vw - 1080px) / 2);
     height: 160px;
     width: 160px;
     border-radius: 80px;
