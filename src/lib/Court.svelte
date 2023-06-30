@@ -18,7 +18,7 @@
   isRounded={true}
   css="gravel court"
 >
-  <p>{court.name}</p>
+  <div class="title">{court.name}</div>
 
   {#if game}
     <label for="home">{getTeamById(game.home).name}</label>
@@ -44,3 +44,10 @@
     />
   {/if}
 </Card>
+
+<style>
+  .title {
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+</style>

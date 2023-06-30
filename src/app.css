@@ -121,10 +121,15 @@ th, td {
 }
 
 .gravel {
-  background: rgb(235, 225, 227);
-  background-image: url(assets/noise.png);
+  background-image: url(assets/gravel.png);
 }
 
 .court {
-  min-height: 100px;
+  min-height: 150px;
+  min-width: 100px;
+  color: white;
+}
+
+label {
+  white-space: nowrap;
 }
