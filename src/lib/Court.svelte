@@ -16,38 +16,31 @@
   isAnimated={true}
   isBorder={true}
   isRounded={true}
+  css="gravel court"
 >
-  <div class="gravel court">
-    <p>{court.name}</p>
+  <p>{court.name}</p>
 
-    {#if game}
-      <label for="home">{getTeamById(game.home).name}</label>
-      <input
-        class="input"
-        id="home"
-        bind:value={game.homeScore}
-        required
-        type="number"
-        min="0"
-        max="13"
-      />
+  {#if game}
+    <label for="home">{getTeamById(game.home).name}</label>
+    <input
+      class="input"
+      id="home"
+      bind:value={game.homeScore}
+      required
+      type="number"
+      min="0"
+      max="13"
+    />
 
-      <label for="visitor">{getTeamById(game.visitor).name}</label>
-      <input
-        class="input"
-        id="visitor"
-        bind:value={game.visitorScore}
-        required
-        type="number"
-        min="0"
-        max="13"
-      />
-    {/if}
-  </div>
+    <label for="visitor">{getTeamById(game.visitor).name}</label>
+    <input
+      class="input"
+      id="visitor"
+      bind:value={game.visitorScore}
+      required
+      type="number"
+      min="0"
+      max="13"
+    />
+  {/if}
 </Card>
-
-<style>
-  .court {
-    min-height: 100px;
-  }
-</style>

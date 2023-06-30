@@ -99,22 +99,32 @@ button:disabled:hover {
   font-size: 0.8em;
 }
 
-.gravel {
-  background: rgb(235, 225, 227);
-  background-image: url(assets/noise.png);
-}
-
 th, td {
   text-align: left;
   border-bottom: 1px solid rgba(201, 201, 201, 0.714);
 }
 
 /* override "agnostic-svelte" */
+/* NOTE cannot be overridden in component file */
 .card {
   padding: 1rem;
 }
 
-.team-form>.card>div {
-  /* hacky */
+.team-form {
+  margin: 1rem 0;
+  max-width: 600px;
+}
+
+.team-form>div {
+  /* inputs */
   margin: 0.5rem 0;
+}
+
+.gravel {
+  background: rgb(235, 225, 227);
+  background-image: url(assets/noise.png);
+}
+
+.court {
+  min-height: 100px;
 }

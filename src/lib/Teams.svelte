@@ -40,57 +40,56 @@
 
 <Ranking />
 
-<div class="team-form">
-  <Card isStacked={true} isShadow={true} isBorder={true} isRounded={true}>
-    <Input
-      id="team"
-      isInline
-      isRounded
-      type="text"
-      label={trans("team")}
-      bind:value={teamName}
-      placeholder="Les Fromages"
-      required
-      minlength="2"
-      maxlength="40"
-    />
+<Card
+  isStacked={true}
+  isShadow={true}
+  isBorder={true}
+  isRounded={true}
+  css="team-form"
+>
+  <Input
+    id="team"
+    isInline
+    isRounded
+    type="text"
+    label={trans("team")}
+    bind:value={teamName}
+    placeholder="Les Fromages"
+    required
+    minlength="2"
+    maxlength="40"
+  />
 
-    <Input
-      id="p1"
-      isInline
-      isRounded
-      type="text"
-      label="P1"
-      bind:value={p1Name}
-      placeholder="Jean-Pierre Baptiste"
-      required
-      minlength="2"
-      maxlength="40"
-    />
+  <Input
+    id="p1"
+    isInline
+    isRounded
+    type="text"
+    label="P1"
+    bind:value={p1Name}
+    placeholder="Jean-Pierre Baptiste"
+    required
+    minlength="2"
+    maxlength="40"
+  />
 
-    <Input
-      id="p2"
-      isInline
-      isRounded
-      type="text"
-      label="P2"
-      bind:value={p2Name}
-      placeholder="Anne-Marie Blanche"
-      required
-      minlength="2"
-      maxlength="40"
-    />
+  <Input
+    id="p2"
+    isInline
+    isRounded
+    type="text"
+    label="P2"
+    bind:value={p2Name}
+    placeholder="Anne-Marie Blanche"
+    required
+    minlength="2"
+    maxlength="40"
+  />
 
-    {#if p1Name.length >= 2 && p2Name.length >= 2}
-      <button on:click={addTeam}>{trans("add")}</button>
-    {/if}
-  </Card>
-</div>
+  {#if p1Name.length >= 2 && p2Name.length >= 2}
+    <button on:click={addTeam}>{trans("add")}</button>
+  {/if}
+</Card>
 
 <style>
-  .team-form {
-    margin: 1rem 0;
-    max-width: 600px;
-  }
-
 </style>
