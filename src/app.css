@@ -25,7 +25,7 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 3px;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -73,6 +73,15 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+button:disabled {
+  color: rgba(82, 81, 81, 0.87);
+  cursor: default;
+}
+
+button:disabled:hover {
+  border-color: transparent;
 }
 
 @media (prefers-color-scheme: light) {

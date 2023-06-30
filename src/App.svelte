@@ -9,7 +9,7 @@
   import Result from "./lib/Result.svelte";
 
   const pages: Page[] = ["preparation", "play", "result"];
-  const [currentRound, maxRounds] = get(rounds);
+  $: [currentRound, maxRounds] = $rounds;
 
   // TODO turnier name etc.
 
@@ -22,6 +22,10 @@
   //  => next round
   // 2. ... 3.
   //  => final Result!
+
+  function setRound(round: number) {
+    // $rounds.current(round); // TODO
+  }
 </script>
 
 <nav class="pages">
@@ -50,9 +54,14 @@
   <nav class="crumbs">
     <ol>
       <li class="crumb">Round</li>
-      {#each range(1, $rounds[1] + 1) as r}
+      {#each range(1, maxRounds + 1) as r}
         <li class="crumb">
-          <button on:click={() => rounds.current(r)}>{r}</button>
+          <button
+            disabled
+            class:current={r === currentRound}
+            class:planned={r > currentRound}
+            on:click={() => setRound(r)}>{r}</button
+          >
         </li>
       {/each}
     </ol>
@@ -74,7 +83,7 @@
 
   .crumbs {
     position: fixed;
-    bottom: 0px;
+    bottom: 3px;
   }
   .crumbs ol {
     list-style-type: none;
@@ -83,5 +92,12 @@
 
   .crumb {
     display: inline-block;
+  }
+
+  .current {
+    border-color: #0cb614;
+  }
+  .planned {
+    opacity: 0.5;
   }
 </style>
