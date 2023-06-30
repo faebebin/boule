@@ -27,7 +27,7 @@ export interface Team {
 
 export interface Court {
 	id: ID,
-	name?: string
+	name: string
 	description?: string
 	importance?: "main | side | training"
 }
