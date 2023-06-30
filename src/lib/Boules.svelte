@@ -22,8 +22,7 @@
   .boule {
     position: fixed;
     top: 10px;
-    /* TODO css variable in app.css */
-    right: calc((100vw - 1080px) / 2);
+    right: 10px;
     height: 160px;
     width: 160px;
     border-radius: 80px;
@@ -37,6 +36,13 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+  }
+
+  @media screen and (min-width: 1080px) {
+    /* TODO css variable in app.css */
+    .boule {
+      right: calc((100vw - 1000px) / 2);
+    }
   }
 
   .boule:hover {
