@@ -10,14 +10,7 @@
   }
 </script>
 
-<Card
-  isStacked={true}
-  isShadow={true}
-  isAnimated={true}
-  isBorder={true}
-  isRounded={true}
-  css="gravel court"
->
+<Card isStacked={true} isAnimated={true} isRounded={true} css="gravel court">
   <div class="title">{court.name}</div>
 
   {#if game}
@@ -47,7 +40,12 @@
 
 <style>
   .title {
+    color: white;
     font-weight: bold;
     margin-bottom: 1rem;
+  }
+
+  label {
+    color: white;
   }
 </style>
