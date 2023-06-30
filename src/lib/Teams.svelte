@@ -4,6 +4,7 @@
   import { v4 as uuidv4 } from "uuid";
   import { trans } from "../trans";
   import Ranking from "./Ranking.svelte";
+  import { Card, Input } from "agnostic-svelte";
 
   let teamList: Team[] = [];
 
@@ -39,29 +40,57 @@
 
 <Ranking />
 
-<label for="team">{trans("team")}</label>
-<input bind:value={teamName} placeholder="Les Fromages" id="team" />
+<div class="team-form">
+  <Card isStacked={true} isShadow={true} isBorder={true} isRounded={true}>
+    <Input
+      id="team"
+      isInline
+      isRounded
+      type="text"
+      label={trans("team")}
+      bind:value={teamName}
+      placeholder="Les Fromages"
+      required
+      minlength="2"
+      maxlength="40"
+    />
 
-<label for="p1">P1</label>
-<input
-  id="p1"
-  bind:value={p1Name}
-  placeholder="Jean-Pierre Baptiste"
-  required
-  minlength="2"
-  maxlength="40"
-/>
+    <Input
+      id="p1"
+      isInline
+      isRounded
+      type="text"
+      label="P1"
+      bind:value={p1Name}
+      placeholder="Jean-Pierre Baptiste"
+      required
+      minlength="2"
+      maxlength="40"
+    />
 
-<label for="p2">P2</label>
-<input
-  id="p1"
-  bind:value={p2Name}
-  placeholder="Anne-Marie Blanche"
-  required
-  minlength="2"
-  maxlength="40"
-/>
+    <Input
+      id="p2"
+      isInline
+      isRounded
+      type="text"
+      label="P2"
+      bind:value={p2Name}
+      placeholder="Anne-Marie Blanche"
+      required
+      minlength="2"
+      maxlength="40"
+    />
 
-{#if p1Name.length >= 2 && p2Name.length >= 2}
-  <button on:click={addTeam}> + </button>
-{/if}
+    {#if p1Name.length >= 2 && p2Name.length >= 2}
+      <button on:click={addTeam}>{trans("add")}</button>
+    {/if}
+  </Card>
+</div>
+
+<style>
+  .team-form {
+    margin: 1rem 0;
+    max-width: 600px;
+  }
+
+</style>

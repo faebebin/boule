@@ -116,3 +116,13 @@ td {
 th {
   text-align: left;
 }
+
+/* override "agnostic-svelte" */
+.card {
+  padding: 1rem;
+}
+
+.team-form>.card>div {
+  /* hacky */
+  margin: 0.5rem 0;
+}

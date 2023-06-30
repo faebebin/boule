@@ -32,8 +32,10 @@
   <ol>
     {#each pages as p}
       <li class="page">
-        <button on:click={() => page.set(p)} disabled={p === $page}
-          >{trans(p)}</button
+        <button
+          on:click={() => page.set(p)}
+          disabled={p === $page}
+          class:current={p === $page}>{trans(p)}</button
         >
       </li>
     {/each}
@@ -53,7 +55,7 @@
 {#if maxRounds > 0}
   <nav class="crumbs">
     <ol>
-      <li class="crumb">Round</li>
+      <li class="crumb first">Round</li>
       {#each range(1, maxRounds + 1) as r}
         <li class="crumb">
           <button
@@ -72,6 +74,11 @@
   .pages {
     border-bottom: 1px solid black;
   }
+
+  .first {
+    margin-right: 9px;
+  }
+
   .pages ol {
     list-style-type: none;
     padding-left: 0;
