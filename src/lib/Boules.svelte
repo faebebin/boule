@@ -18,12 +18,12 @@
   {/if}
 </div>
 
-<div class="shadow" />
+<!-- div class="shadow" / -->
 
 <style>
   .boule {
     position: fixed;
-    top: 10px;
+    bottom: 30px;
     right: 10px;
     height: 160px;
     width: 160px;
@@ -38,12 +38,30 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    animation: bounce 1s ease-in-out forwards;
   }
 
   @media screen and (min-width: 1080px) {
     /* TODO css variable in app.css */
     .boule {
       right: calc((100vw - 1000px) / 2);
+    }
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(10px);
+    }
+    80% {
+      transform: translateY(15px);
+    }
+    20%,
+    60%,
+    100% {
+      transform: translateY(20px);
     }
   }
 
@@ -69,15 +87,15 @@
     font-size: 0.9em;
   }
 
+  /*
   .shadow {
     position: fixed;
-    bottom: 10px;
+    bottom: 0px;
     right: 10px;
     width: 100px;
     height: 20px;
-    /* background-color: rgba(0, 0, 0, 1); */
-    /* transition: transform 0.3s ease; */
     clip-path: ellipse(50px 10px);
     background: radial-gradient(rgba(0, 0, 0, 0.5), transparent);
   }
+  */
 </style>
