@@ -35,13 +35,6 @@ h1 {
   line-height: 1.1;
 }
 
-.container {
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
-}
-
 #app {
   max-width: 1080px;
   margin: 0 auto;
@@ -104,6 +97,35 @@ th, td {
   border-bottom: 1px solid rgba(201, 201, 201, 0.714);
 }
 
+/*
+single column layout on smaller screens:
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;  
+  }
+*/
+
+
+.courts-grid {
+  /* grid-template-rows: repeat(2, 1fr); */
+  display: grid;
+  /* Responsive columns */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  width: 100%;
+  gap: 24px;
+  justify-items: center;
+  padding: 10px;
+}
+
+
+.court {
+  min-height: 180px;
+  width: 180px;
+  max-width: 180px;
+}
+
+
 /* override "agnostic-svelte" */
 /* NOTE cannot be overridden in component file */
 .card {
@@ -124,10 +146,6 @@ th, td {
   background-image: url(assets/gravel.png);
 }
 
-.court {
-  min-height: 180px;
-  min-width: 180px;
-}
 
 label {
   white-space: nowrap;

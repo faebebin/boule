@@ -50,7 +50,7 @@
   }
 </script>
 
-<div class="container">
+<div class="courts-grid">
   {#each gamesOfRound as game, index (game.id)}
     <Court court={getCourtById(game.court)} {game} />
   {/each}

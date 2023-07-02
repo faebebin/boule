@@ -4,7 +4,7 @@
   import CourtGravel from "./Court.svelte";
 </script>
 
-<div class="container">
+<div class="courts-grid">
   {#each $courts as court (court.id)}
     <CourtGravel {court} />
   {/each}
