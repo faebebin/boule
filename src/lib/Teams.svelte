@@ -86,10 +86,21 @@
     maxlength="40"
   />
 
-  {#if p1Name.length >= 2 && p2Name.length >= 2}
-    <button on:click={addTeam}>{trans("add")}</button>
-  {/if}
+  <button
+    class="hide"
+    class:show={p1Name.length >= 2 && p2Name.length >= 2}
+    on:click={addTeam}
+  >
+    {trans("add")}
+  </button>
 </Card>
 
 <style>
+  .hide {
+    visibility: hidden;
+  }
+
+  .show {
+    visibility: visible;
+  }
 </style>
