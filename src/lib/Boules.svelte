@@ -18,6 +18,8 @@
   {/if}
 </div>
 
+<div class="shadow" />
+
 <style>
   .boule {
     position: fixed;
@@ -65,5 +67,17 @@
 
   .info {
     font-size: 0.9em;
+  }
+
+  .shadow {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 100px;
+    height: 20px;
+    /* background-color: rgba(0, 0, 0, 1); */
+    /* transition: transform 0.3s ease; */
+    clip-path: ellipse(50px 10px);
+    background: radial-gradient(rgba(0, 0, 0, 0.5), transparent);
   }
 </style>
