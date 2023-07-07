@@ -1,4 +1,5 @@
 import type {Game} from './store';
+import {shuffle} from 'lodash'
 import {v4 as uuidv4} from 'uuid';
 
 export const numberOfRounds = (numberOfTeams: number): number => {
@@ -24,14 +25,37 @@ export function isEven(n) {
 	return n % 2 == 0;
 }
 
+export function firstRoundGames(courtIds: string[], teamIds: string[]): Game[] {
+	const shuffledTeamIds = shuffle(teamIds)
+	const firstGames: Game[] = []
+
+	// Loop over courts and allocate 2 teams to per game 
+	for (var i = 0; i < courtIds.length; i++) {
+		const homeIndex = i * 2
+		const visitorIndex = homeIndex + 1
+
+		if (homeIndex >= teamIds.length) break
+
+		firstGames.push({
+			id: uuidv4(),
+			home: shuffledTeamIds[homeIndex],
+			visitor: shuffledTeamIds[visitorIndex],
+			homeScore: 0,
+			visitorScore: 0,
+			court: courtIds[i],
+			status: "planned",
+			round: 1,
+		})
+	}
+
+	return firstGames
+}
+
 export function nextRoundGames(gl: Game[], round: number, courtIds: string[], teamIds: string[]): Game[] {
 	// TODO how test svelte store?
 	const seperator = "<-vs->"
 
-	const pairingHistory: string[] = gl.map(({home, visitor}) => `${home}${seperator}${visitor}`
-	)
-
-
+	const pairingHistory: string[] = gl.map(({home, visitor}) => `${home}${seperator}${visitor}`)
 
 	for (var i = 0; i < courtIds.length; i++) {
 		if (teamIds.length < 2) break
@@ -54,3 +78,4 @@ export function nextRoundGames(gl: Game[], round: number, courtIds: string[], te
 	}
 	return gl
 }
+

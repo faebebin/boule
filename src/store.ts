@@ -1,6 +1,5 @@
 import {writable, derived, get, readable} from 'svelte/store';
-import {isEven, numberOfRounds, nextRoundGames} from './utils';
-import {shuffle} from 'lodash'
+import {isEven, numberOfRounds, nextRoundGames, firstRoundGames} from './utils';
 import {example_teams} from "./fixtures/teams";
 
 import {v4 as uuidv4} from 'uuid';
@@ -190,29 +189,7 @@ function createGames() {
 		const courtIds = get(courts).map(({id}) => id); // TODO derived stores
 		const teamIds = get(teams).map(({id}) => id);
 
-		const shuffledTeamIds = shuffle(teamIds)
-		const games: Game[] = []
-
-		// Loop over courts and allocate 2 teams to per game 
-		for (var i = 0; i < courtIds.length; i++) {
-			const homeId = i * 2
-			const visitorId = homeId + 1
-
-			if (homeId >= teamIds.length) break
-
-			games.push({
-				id: uuidv4(),
-				home: shuffledTeamIds[homeId],
-				visitor: shuffledTeamIds[visitorId],
-				homeScore: 0,
-				visitorScore: 0,
-				court: courtIds[i],
-				status: "planned",
-				round: 1,
-			})
-		}
-
-		set(games)
+		set(firstRoundGames(courtIds, teamIds))
 	}
 
 
