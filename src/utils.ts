@@ -60,7 +60,7 @@ export function nextRoundGames(gl: Game[], round: number, courtIds: string[], te
 	for (var i = 0; i < courtIds.length; i++) {
 		if (teamIds.length < 2) break
 
-		const home = teamIds.splice(i, 1)[0]
+		const home = teamIds.shift()
 		const visitorIndex = teamIds.findIndex((visitor, _) => {
 			return !pairingHistory.includes(`${home}${seperator}${visitor}`)
 		})
