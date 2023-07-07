@@ -1,11 +1,9 @@
 import {writable, derived, get, readable} from 'svelte/store';
-import {isEven, numberOfRounds} from './utils';
+import {isEven, numberOfRounds, nextRoundGames} from './utils';
 import {shuffle} from 'lodash'
 import {example_teams} from "./fixtures/teams";
 
-import {isOdd} from 'lodash';
 import {v4 as uuidv4} from 'uuid';
-import type {v4 as UUIDV4} from 'uuid';
 // '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 
 
@@ -225,34 +223,9 @@ function createGames() {
 
 		const courtIds = get(courts).map(({id}) => id);
 		const teamIds = get(teams).map(({id}) => id);
-		const seperator = "<-vs->"
 
 		update((gl) => {
-
-			const pairingHistory: string[] = gl.map(({home, visitor}) => `${home}${seperator}${visitor}`
-			)
-
-			for (var i = 0; i < courtIds.length; i++) {
-				if (teamIds.length < 2) break
-
-				const home = teamIds.splice(i, 1)[0]
-				const visitorIndex = teamIds.findIndex((visitor, _) => {
-					return !pairingHistory.includes(`${home}${seperator}${visitor}`)
-				})
-				const visitor = teamIds.splice(visitorIndex, 1)[0]
-				gl.push({
-					id: uuidv4(),
-					home,
-					visitor,
-					homeScore: 0,
-					visitorScore: 0,
-					court: courtIds[i],
-					status: "planned",
-					round,
-				})
-			}
-
-			return gl
+			return nextRoundGames(gl, round, courtIds, teamIds)
 		})
 	}
 

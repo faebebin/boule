@@ -14,16 +14,18 @@
   <div class="title">{court.name}</div>
 
   {#if game}
-    <label for="home">{getTeamById(game.home).name}</label>
-    <input
-      class="input"
-      id="home"
-      bind:value={game.homeScore}
-      required
-      type="number"
-      min="0"
-      max="13"
-    />
+    {#if getTeamById(game.home)}
+      <label for="home">{getTeamById(game.home).name}</label>
+      <input
+        class="input"
+        id="home"
+        bind:value={game.homeScore}
+        required
+        type="number"
+        min="0"
+        max="13"
+      />
+    {/if}
 
     <label for="visitor">{getTeamById(game.visitor).name}</label>
     <input
