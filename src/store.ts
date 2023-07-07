@@ -201,6 +201,7 @@ function createGames() {
 			const visitorId = homeId + 1
 
 			if (homeId >= teamIds.length) break
+
 			games.push({
 				id: uuidv4(),
 				home: shuffledTeamIds[homeId],
@@ -232,9 +233,10 @@ function createGames() {
 			)
 
 			for (var i = 0; i < courtIds.length; i++) {
-				if (teamIds.length < i + 1) break
+				if (teamIds.length < 2) break
+
 				const home = teamIds.splice(i, 1)[0]
-				const visitorIndex = teamIds.findIndex((visitor, index) => {
+				const visitorIndex = teamIds.findIndex((visitor, _) => {
 					return !pairingHistory.includes(`${home}${seperator}${visitor}`)
 				})
 				const visitor = teamIds.splice(visitorIndex, 1)[0]
