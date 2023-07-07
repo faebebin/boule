@@ -108,9 +108,6 @@
     display: inline-block;
   }
 
-  .current {
-    border-color: #0cb614;
-  }
   .planned {
     opacity: 0.5;
   }

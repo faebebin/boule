@@ -1,16 +1,10 @@
 <script lang="ts">
-  import { teams } from "../store";
+  import { teams, teamsValid } from "../store";
   import type { Player, Team } from "../store";
   import { v4 as uuidv4 } from "uuid";
   import { trans } from "../trans";
   import Ranking from "./Ranking.svelte";
   import { Card, Input } from "agnostic-svelte";
-
-  let teamList: Team[] = [];
-
-  teams.subscribe((tl) => {
-    teamList = tl;
-  });
 
   let [teamName, p1Name, p2Name] = ["", "", ""];
 
@@ -39,6 +33,18 @@
 </script>
 
 <Ranking />
+<div class="top1" class:valid={$teamsValid} class:invalid={!$teamsValid}>
+  nombre d'équipes: {$teams.length}
+</div>
+{#if !$teamsValid}
+  <div class="soon">
+    {#if $teams.length < 2}
+      Add at least 2 teams
+    {:else}
+      Even number of teams required. 'Freilos' is not yet implemented ...
+    {/if}
+  </div>
+{/if}
 
 <Card
   isStacked={true}
@@ -102,5 +108,17 @@
 
   .show {
     visibility: visible;
+  }
+
+  .top1 {
+    margin-top: 1rem;
+  }
+
+  .valid {
+    color: #0cb614;
+  }
+
+  .invalid {
+    color: red;
   }
 </style>

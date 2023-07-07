@@ -146,6 +146,13 @@ single column layout on smaller screens:
   background-image: url(assets/gravel.png);
 }
 
+.current {
+  border-color: #0cb614;
+}
+
+.invalid {
+  border-color: red;
+}
 
 label {
   white-space: nowrap;

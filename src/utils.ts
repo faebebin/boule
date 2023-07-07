@@ -16,3 +16,7 @@ export function formatTime(milliseconds) {
 	const ss = zeroPadded(Math.floor(milliseconds / 1000) % 60);
 	return `${mm}:${ss}`;
 }
+
+export function isEven(n) {
+	return n % 2 == 0;
+}

@@ -1,8 +1,9 @@
 import {writable, derived, get, readable} from 'svelte/store';
-import {numberOfRounds} from './utils';
+import {isEven, numberOfRounds} from './utils';
 import {shuffle} from 'lodash'
 import {example_teams} from "./fixtures/teams";
 
+import {isOdd} from 'lodash';
 import {v4 as uuidv4} from 'uuid';
 import type {v4 as UUIDV4} from 'uuid';
 // '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
@@ -98,6 +99,14 @@ function createTeams() {
 }
 
 export const teams = createTeams();
+
+export const teamsValid = derived(teams, ($teams) => {
+	const teamsCount = $teams.length
+	const even = isEven(teamsCount) // TODO replace with Freilos
+	const minCount = teamsCount >= 2
+	return even && minCount
+});
+
 
 
 export interface Tournament {

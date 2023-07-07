@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {numberOfRounds, sortTeams} from '../../src/utils'
+import {numberOfRounds, isEven} from '../../src/utils'
 import type {Team} from '../../src/store';
 
 describe("numberOfRounds", () => {
@@ -45,18 +45,12 @@ describe("numberOfRounds", () => {
 
 });
 
-describe("sortTeams", () => {
-	it('ranks teams according points', () => {
-		const team1: Team = {
-			id: "1",
-			members: [],
-			points: 1,
-		}
-		const team2: Team = {
-			id: "2",
-			members: [],
-			points: 2,
-		}
-		expect(sortTeams(team1, team2)).toEqual(-1);
+describe("isEven", () => {
+	it('returns true for 2', () => {
+		expect(isEven(2)).toBeTruthy();
+	});
+
+	it('returns true for 0', () => {
+		expect(isEven(0)).toBeTruthy();
 	});
 });
