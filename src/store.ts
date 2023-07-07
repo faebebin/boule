@@ -189,18 +189,22 @@ function createGames() {
 
 	function createFirstRound() {
 
-		const courtIds = get(courts).map(({id}) => id);
+		const courtIds = get(courts).map(({id}) => id); // TODO derived stores
 		const teamIds = get(teams).map(({id}) => id);
 
 		const shuffledTeamIds = shuffle(teamIds)
-		const newGames: Game[] = []
+		const games: Game[] = []
 
+		// Loop over courts and allocate 2 teams to per game 
 		for (var i = 0; i < courtIds.length; i++) {
-			if (teamIds.length < i + 1) break
-			newGames.push({
+			const homeId = i * 2
+			const visitorId = homeId + 1
+
+			if (homeId >= teamIds.length) break
+			games.push({
 				id: uuidv4(),
-				home: shuffledTeamIds[i],
-				visitor: shuffledTeamIds[i + 1],
+				home: shuffledTeamIds[homeId],
+				visitor: shuffledTeamIds[visitorId],
 				homeScore: 0,
 				visitorScore: 0,
 				court: courtIds[i],
@@ -209,7 +213,7 @@ function createGames() {
 			})
 		}
 
-		set(newGames)
+		set(games)
 	}
 
 
