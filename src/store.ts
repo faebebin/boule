@@ -75,6 +75,9 @@ function createTeams() {
 		const gamesOfRound = get(games).filter(({round}) => round === currentRound);
 		teams.update((tl) => {
 			for (const game of gamesOfRound) {
+				if (game.homeScore === game.visitorScore) {
+					continue
+				}
 				if (game.homeScore > game.visitorScore) {
 					tl.find(({id}) => id === game.home).points++;
 				} else {
