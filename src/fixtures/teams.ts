@@ -106,5 +106,20 @@ export const example_teams: Team[] = [
 		],
 		points: 0,
 	},
+	{
+		id: "8",
+		name: "Bara Broest",
+		members: [
+			{
+				id: "16",
+				name: "Puyol",
+			},
+			{
+				id: "17",
+				name: "Sergio Ramos",
+			},
+		],
+		points: 0,
+	},
 
 ]
