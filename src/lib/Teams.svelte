@@ -22,7 +22,7 @@
       tl.push({
         id: uuidv4(),
         name: teamName,
-        points: 0,
+        wins: 0,
         members: [p1, p2],
       });
       return tl;

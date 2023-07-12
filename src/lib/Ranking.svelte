@@ -1,7 +1,7 @@
 <script lang="ts">
   import { teams } from "../store";
   import SvelteTable from "svelte-table";
-  // import { Table } from "agnostic-svelte"; TODO try 
+  // import { Table } from "agnostic-svelte"; TODO try
   import { trans } from "../trans";
   export let showRank = false;
 
@@ -32,10 +32,10 @@
         sortable: true,
       },
       {
-        key: "points",
-        label: "Points",
+        key: "wins",
+        label: "Vitories",
         title: trans("wins"),
-        value: (row) => row.points,
+        value: (row) => row.wins,
         sortable: true,
       }
     );

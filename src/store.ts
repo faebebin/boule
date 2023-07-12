@@ -18,7 +18,7 @@ export interface Player {
 export interface Team {
 	id: ID,
 	members: Player[],
-	points: number
+	wins: number
 	name?: string
 	rank?: number
 }
@@ -58,9 +58,8 @@ function createTeams() {
 	function updateRanking() {
 		update((tl) => {
 			tl.sort(
-				(a, b) => b.points - a.points
+				(a, b) => b.wins - a.wins
 			);
-			// TODO nach game points (hierarchical sort)
 			tl.forEach((team, index) => {
 				team.rank = index + 1;
 			})
@@ -79,9 +78,9 @@ function createTeams() {
 					continue
 				}
 				if (game.homeScore > game.visitorScore) {
-					tl.find(({id}) => id === game.home).points++;
+					tl.find(({id}) => id === game.home).wins++;
 				} else {
-					tl.find(({id}) => id === game.visitor).points++;
+					tl.find(({id}) => id === game.visitor).wins++;
 				}
 			}
 			return tl
@@ -198,7 +197,7 @@ function createGames() {
 
 	function createNextRound(round: number) {
 		// 1. Round: Random Games
-		// Following rounds: Match same points. !If played before, match teams with 1 point diff
+		// Following rounds: Match same #wins. !If played before, match teams with 1 point diff
 		// Nr rounds
 
 		const courtIds = get(courts).map(({id}) => id);

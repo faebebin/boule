@@ -14,7 +14,7 @@ export const example_teams: Team[] = [
 				name: "Paulette",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 	{
 		id: "2",
@@ -29,7 +29,7 @@ export const example_teams: Team[] = [
 				name: "Jacques",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 	{
 		id: "3",
@@ -44,7 +44,7 @@ export const example_teams: Team[] = [
 				name: "Paul",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 	{
 		id: "4",
@@ -59,7 +59,7 @@ export const example_teams: Team[] = [
 				name: "Madame Tusseaud",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 	{
 		id: "5",
@@ -74,7 +74,7 @@ export const example_teams: Team[] = [
 				name: "Albert Unepierre",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 	{
 		id: "6",
@@ -89,7 +89,7 @@ export const example_teams: Team[] = [
 				name: "Marie Antoinette",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 	{
 		id: "7",
@@ -104,7 +104,7 @@ export const example_teams: Team[] = [
 				name: "Maria Callas",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 	{
 		id: "8",
@@ -119,7 +119,7 @@ export const example_teams: Team[] = [
 				name: "Sergio Ramos",
 			},
 		],
-		points: 0,
+		wins: 0,
 	},
 
 ]
