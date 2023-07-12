@@ -60,9 +60,17 @@ function createTeams() {
 
 	function updateRanking() {
 		update((tl) => {
+
 			tl.sort(
-				(a, b) => b.wins - a.wins
+				// Sort first after wins, then pointsDiff
+				(a, b) => {
+					if (b.wins === a.wins) {
+						return b.pointsDiff - a.pointsDiff
+					}
+					return (b.wins - a.wins)
+				}
 			);
+
 			tl.forEach((team, index) => {
 				team.rank = index + 1;
 			})
@@ -76,16 +84,11 @@ function createTeams() {
 		const currentRound = get(rounds)[0]
 		const gamesOfRound = get(games).filter(({round}) => round === currentRound);
 		teams.update((tl) => {
-			console.log(tl)
 			for (const game of gamesOfRound) {
 
 				const home = tl.find(({id}) => id === game.home)
 				const visitor = tl.find(({id}) => id === game.visitor)
-				console.log(home.pointsWon)
-				console.log(home)
-				console.log(game.homeScore)
 				home.pointsWon += game.homeScore
-				console.log(home.pointsWon)
 
 				home.pointsLost += game.visitorScore
 				home.pointsDiff += game.homeScore
@@ -104,7 +107,6 @@ function createTeams() {
 					visitor.wins++;
 				}
 			}
-			console.log(tl)
 			return tl
 		})
 	}
