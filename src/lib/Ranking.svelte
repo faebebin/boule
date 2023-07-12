@@ -41,7 +41,7 @@
       {
         key: "pointsDiff",
         label: "PointsDiff",
-        title: "Points diff",
+        title: "diff",
         value: (row) => row.pointsDiff,
         sortable: true,
       }
