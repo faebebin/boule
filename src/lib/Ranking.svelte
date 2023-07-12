@@ -33,9 +33,16 @@
       },
       {
         key: "wins",
-        label: "Vitories",
+        label: "Victories",
         title: trans("wins"),
         value: (row) => row.wins,
+        sortable: true,
+      },
+      {
+        key: "pointsDiff",
+        label: "PointsDiff",
+        title: "Points diff",
+        value: (row) => row.pointsDiff,
         sortable: true,
       }
     );

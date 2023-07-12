@@ -15,6 +15,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 	{
 		id: "2",
@@ -30,6 +34,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 	{
 		id: "3",
@@ -45,6 +53,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 	{
 		id: "4",
@@ -60,6 +72,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 	{
 		id: "5",
@@ -75,6 +91,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 	{
 		id: "6",
@@ -90,6 +110,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 	{
 		id: "7",
@@ -105,6 +129,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 	{
 		id: "8",
@@ -120,6 +148,10 @@ export const example_teams: Team[] = [
 			},
 		],
 		wins: 0,
+		pointsWon: 0,
+		pointsLost: 0,
+		pointsDiff: 0,
+
 	},
 
 ]

@@ -19,6 +19,9 @@ export interface Team {
 	id: ID,
 	members: Player[],
 	wins: number
+	pointsWon: number
+	pointsLost: number
+	pointsDiff: number
 	name?: string
 	rank?: number
 }
@@ -73,16 +76,35 @@ function createTeams() {
 		const currentRound = get(rounds)[0]
 		const gamesOfRound = get(games).filter(({round}) => round === currentRound);
 		teams.update((tl) => {
+			console.log(tl)
 			for (const game of gamesOfRound) {
+
+				const home = tl.find(({id}) => id === game.home)
+				const visitor = tl.find(({id}) => id === game.visitor)
+				console.log(home.pointsWon)
+				console.log(home)
+				console.log(game.homeScore)
+				home.pointsWon += game.homeScore
+				console.log(home.pointsWon)
+
+				home.pointsLost += game.visitorScore
+				home.pointsDiff += game.homeScore
+				home.pointsDiff -= game.visitorScore
+				visitor.pointsWon += game.visitorScore
+				visitor.pointsLost += game.homeScore
+				visitor.pointsDiff += game.visitorScore
+				visitor.pointsDiff -= game.homeScore
+
 				if (game.homeScore === game.visitorScore) {
 					continue
 				}
 				if (game.homeScore > game.visitorScore) {
-					tl.find(({id}) => id === game.home).wins++;
+					home.wins++;
 				} else {
-					tl.find(({id}) => id === game.visitor).wins++;
+					visitor.wins++;
 				}
 			}
+			console.log(tl)
 			return tl
 		})
 	}

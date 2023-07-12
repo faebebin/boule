@@ -23,6 +23,9 @@
         id: uuidv4(),
         name: teamName,
         wins: 0,
+        pointsWon: 0,
+        pointsLost: 0,
+        pointsDiff: 0,
         members: [p1, p2],
       });
       return tl;
