@@ -26,6 +26,7 @@
     "@types/uuid": "^9.0.1",
     "agnostic-svelte": "^1.1.27",
     "lodash": "^4.17.21",
+    "svelte-local-storage-store": "^0.5.0",
     "svelte-table": "^0.5.11",
     "uuid": "^9.0.0"
   }

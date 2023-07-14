@@ -26,6 +26,11 @@
   function setRound(round: number) {
     // $rounds.current(round); // TODO
   }
+
+  function deleteLocalStorage() {
+    localStorage.clear();
+    location.reload();
+  }
 </script>
 
 <nav class="pages">
@@ -70,6 +75,14 @@
   </nav>
 {/if}
 
+<button
+  class="delete-button invalid"
+  on:click={deleteLocalStorage}
+  title="Delete Local Storage!"
+>
+  <span role="img" aria-label="Garbage Icon">🗑️</span>
+</button>
+
 <style>
   main {
     margin-top: 1rem;
@@ -110,5 +123,21 @@
 
   .planned {
     opacity: 0.5;
+  }
+
+  .delete-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: -5px 10px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (min-width: 1080px) {
+    /* TODO css variable in app.css */
+    .delete-button {
+      right: calc((100vw - 1000px) / 2);
+    }
   }
 </style>

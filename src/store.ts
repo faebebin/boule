@@ -1,12 +1,13 @@
 import {writable, derived, get, readable} from 'svelte/store';
 import {isEven, numberOfRounds, nextRoundGames, firstRoundGames} from './utils';
 import {example_teams} from "./fixtures/teams";
+import {persisted} from 'svelte-local-storage-store'
 
 import {v4 as uuidv4} from 'uuid';
 // '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 
 
-export const count = writable(0);
+export const count = persisted('count', 0);
 
 type ID = string // uuidv4
 
@@ -46,10 +47,10 @@ export interface Game {
 
 export type Page = "preparation" | "play" | "result";
 
-export const page = writable<Page>("preparation");
+export const page = persisted<Page>("page", "preparation");
 
 function createTeams() {
-	const {subscribe, update} = writable<Team[]>([]);
+	const {subscribe, update} = persisted<Team[]>('teams', []);
 
 	function loadExampleTeams() {
 		update((tl) => {
@@ -142,7 +143,7 @@ export interface Tournament {
 
 
 function createCourts() {
-	const {subscribe, set, update} = writable<Court[]>([]);
+	const {subscribe, set, update} = persisted<Court[]>("courts", []);
 
 	function generateCourts(teamsCount: number) {
 
@@ -165,10 +166,10 @@ function createCourts() {
 
 export const courts = createCourts()
 
-export const tournament = writable<Tournament>()
+// export const tournament = persisted<Tournament>("tournament",)
 
 function createRounds() {
-	const {subscribe, set, update} = writable<[number, number]>([1, 0]); // [current, max]
+	const {subscribe, set, update} = persisted<[number, number]>("rounds", [1, 0]); // [current, max]
 
 	function initRounds(teamsCount: number) {
 		set([1, numberOfRounds(teamsCount)]);
@@ -208,7 +209,7 @@ function createRounds() {
 export const rounds = createRounds()
 
 function createGames() {
-	const {subscribe, set, update} = writable<Game[]>([]);
+	const {subscribe, set, update} = persisted<Game[]>("games", []);
 
 	function createFirstRound() {
 
