@@ -7,6 +7,7 @@
   import { Card, Input } from "agnostic-svelte";
 
   let [teamName, p1Name, p2Name] = ["", "", ""];
+  export let started: boolean = false;
 
   function addTeam() {
     const p1: Player = {
@@ -49,60 +50,62 @@
   </div>
 {/if}
 
-<Card
-  isStacked={true}
-  isShadow={true}
-  isBorder={true}
-  isRounded={true}
-  css="team-form"
->
-  <Input
-    id="team"
-    isInline
-    isRounded
-    type="text"
-    label={trans("team")}
-    bind:value={teamName}
-    placeholder="Les Fromages"
-    required
-    minlength="2"
-    maxlength="40"
-  />
-
-  <Input
-    id="p1"
-    isInline
-    isRounded
-    type="text"
-    label="P1"
-    bind:value={p1Name}
-    placeholder="Jean-Pierre Baptiste"
-    required
-    minlength="2"
-    maxlength="40"
-  />
-
-  <Input
-    id="p2"
-    isInline
-    isRounded
-    type="text"
-    label="P2"
-    bind:value={p2Name}
-    placeholder="Anne-Marie Blanche"
-    required
-    minlength="2"
-    maxlength="40"
-  />
-
-  <button
-    class="hide"
-    class:show={p1Name.length >= 2 && p2Name.length >= 2}
-    on:click={addTeam}
+{#if !started}
+  <Card
+    isStacked={true}
+    isShadow={true}
+    isBorder={true}
+    isRounded={true}
+    css="team-form"
   >
-    {trans("add")}
-  </button>
-</Card>
+    <Input
+      id="team"
+      isInline
+      isRounded
+      type="text"
+      label={trans("team")}
+      bind:value={teamName}
+      placeholder="Les Fromages"
+      required
+      minlength="2"
+      maxlength="40"
+    />
+
+    <Input
+      id="p1"
+      isInline
+      isRounded
+      type="text"
+      label="P1"
+      bind:value={p1Name}
+      placeholder="Jean-Pierre Baptiste"
+      required
+      minlength="2"
+      maxlength="40"
+    />
+
+    <Input
+      id="p2"
+      isInline
+      isRounded
+      type="text"
+      label="P2"
+      bind:value={p2Name}
+      placeholder="Anne-Marie Blanche"
+      required
+      minlength="2"
+      maxlength="40"
+    />
+
+    <button
+      class="hide"
+      class:show={p1Name.length >= 2 && p2Name.length >= 2}
+      on:click={addTeam}
+    >
+      {trans("add")}
+    </button>
+  </Card>
+{/if}
 
 <style>
   .hide {

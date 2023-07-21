@@ -3,13 +3,18 @@
   import { range } from "lodash";
   import Play from "./lib/Play.svelte";
   import { trans } from "./trans";
-  import { page, rounds } from "./store";
-  import { get } from "svelte/store";
+  import { page, rounds, games } from "./store";
   import type { Page } from "./store";
   import Result from "./lib/Result.svelte";
 
-  const pages: Page[] = ["preparation", "play", "result"];
+  const prepare: Page = "preparation";
+  const play: Page = "play";
+  const result: Page = "result";
   $: [currentRound, maxRounds] = $rounds;
+  let started = false;
+  games.subscribe((gl) => {
+    started = gl.length > 0;
+  });
 
   // TODO turnier name etc.
 
@@ -35,15 +40,29 @@
 
 <nav class="pages">
   <ol>
-    {#each pages as p}
-      <li class="page">
-        <button
-          on:click={() => page.set(p)}
-          disabled={p === $page}
-          class:current={p === $page}>{trans(p)}</button
-        >
-      </li>
-    {/each}
+    <li class="page">
+      <button
+        on:click={() => page.set(prepare)}
+        disabled={prepare === $page}
+        class:current={prepare === $page}>{trans(prepare)}</button
+      >
+    </li>
+    <li class="page">
+      <button
+        on:click={() => page.set(play)}
+        disabled={play === $page || !started}
+        class:planned={!started}
+        class:current={play === $page}>{trans(play)}</button
+      >
+    </li>
+    <li class="page">
+      <button
+        on:click={() => page.set(result)}
+        disabled={result === $page || !started}
+        class:planned={!started}
+        class:current={result === $page}>{trans(result)}</button
+      >
+    </li>
   </ol>
 </nav>
 
@@ -92,7 +111,7 @@
   }
 
   .pages {
-    border-bottom: 1px solid black;
+    background-color: #f9f9f9;
   }
 
   .first {
@@ -111,6 +130,7 @@
   .crumbs {
     position: fixed;
     bottom: 3px;
+    background-color: #f9f9f9;
   }
   .crumbs ol {
     list-style-type: none;

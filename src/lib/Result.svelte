@@ -22,7 +22,7 @@
 {#if isFinalRound}
   <Boules title="fin 🏆 !" />
 {:else}
-  <Boules handleClick={createNextRound} title={`Next Round ${nextRound}`} />
+  <Boules handleClick={createNextRound} title={`Next Round ${nextRound}`} info="Regarding ranking" />
 {/if}
 
 <style>
