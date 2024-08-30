@@ -9,6 +9,7 @@
   $: courtsCount = $courts.length;
   $: teamsCount = $teams.length;
   $: gamesCount = $games.length;
+  $: manualRounds = null;
 
   function firstRound() {
     games.createFirstRound();
@@ -28,11 +29,22 @@
 
   function initCourtsAndRounds() {
     courts.generateCourts(teamsCount);
-    rounds.initRounds(teamsCount);
+    rounds.initRounds(manualRounds || teamsCount, !!manualRounds);
   }
 </script>
 
 <Teams started={courtsCount > 0} />
+
+<input type="number" bind:value={manualRounds} placeholder="Manual N° rounds" class="top1"/>
+<div class="roundsinfo top1 roundsinfo">
+{#if manualRounds}
+  This value it will be used as number of rounds.
+{:else if courtsCount === 0}
+  Value is not set. The number of rounds is calculated according 'Schweizer System' = 'Potenz 2 hoch Rundenzahl muss größer sein als die Zahl der teilnehmenden Teams.'
+{/if}
+</div>
+
+
 <Courts />
 
 {#if teamsCount < 2}
@@ -53,3 +65,18 @@
     info="(View only)"
   />
 {/if}
+
+<style>
+  .top1 {
+    margin-top: 1rem;
+  }
+
+  .roundsinfo {
+    font-size: 0.8em;
+    color:  #646cffaa;
+  }
+
+  .roundsinfo {
+    max-width: 50%;
+  }
+</style>

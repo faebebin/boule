@@ -171,8 +171,13 @@ export const courts = createCourts()
 function createRounds() {
 	const {subscribe, set, update} = persisted<[number, number]>("rounds", [1, 0]); // [current, max]
 
-	function initRounds(teamsCount: number) {
-		set([1, numberOfRounds(teamsCount)]);
+	function initRounds(teamsCount: number, manual: boolean) {
+		// TODO ugly quickfix of manual number of rounds! > make clean
+		if (manual) {
+			set([1, teamsCount]);
+		}	else {
+			set([1, numberOfRounds(teamsCount)]);
+		}
 	}
 
 	function next() {
