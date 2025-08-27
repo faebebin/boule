@@ -32,18 +32,7 @@
     // $rounds.current(round); // TODO
   }
 
-  // Reset
-  let showDeleteConfirm = false;
-
   function deleteLocalStorage() {
-    showDeleteConfirm = true;
-  }
-
-  function cancelDelete() {
-    showDeleteConfirm = false;
-  }
-
-  function proceedDelete() {
     localStorage.clear();
     location.reload();
   }
@@ -103,16 +92,6 @@
       {/each}
     </ol>
   </nav>
-{/if}
-
-{#if showDeleteConfirm}
-  <div class="delete-confirm-overlay">
-    <div class="delete-confirm-dialog">
-      <p>Do you want to delete the whole tournament?!</p>
-      <button on:click={proceedDelete} class="confirm">Yes, delete</button>
-      <button on:click={cancelDelete} class="cancel">No (cancel delete)</button>
-    </div>
-  </div>
 {/if}
 
 <button
