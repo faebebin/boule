@@ -33,8 +33,11 @@
   }
 
   function deleteLocalStorage() {
-    localStorage.clear();
-    location.reload();
+    if (window.confirm("Do you want to delete the whole tournament?!")) {
+      localStorage.clear();
+      location.reload();
+    }
+    // If cancelled, do nothing
   }
 </script>
 
