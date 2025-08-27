@@ -1,6 +1,9 @@
 import type {Game} from './store';
+import {teams, courts, games, rounds, page} from "./store";
 import {shuffle} from 'lodash'
 import {v4 as uuidv4} from 'uuid';
+
+import {get} from "svelte/store";
 
 export const numberOfRounds = (numberOfTeams: number): number => {
 	return Math.floor(Math.log2(numberOfTeams)) + 1
@@ -79,3 +82,37 @@ export function nextRoundGames(gl: Game[], round: number, courtIds: string[], te
 	return gl
 }
 
+function downloadFile(filename: string, content: string, type = "application/json") {
+	const blob = new Blob([content], {type});
+	const link = document.createElement("a");
+	link.href = URL.createObjectURL(blob);
+	link.setAttribute("download", filename);
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+}
+
+export function exportTournament() {
+	const snapshot = {
+		teams: get(teams),
+		courts: get(courts),
+		games: get(games),
+		rounds: get(rounds),
+		page: get(page),
+	};
+	downloadFile("boule-tournament.json", JSON.stringify(snapshot, null, 2));
+}
+
+export function importTournament(file: File) {
+	const reader = new FileReader();
+	reader.onload = (e) => {
+		const json = JSON.parse(e.target?.result as string);
+
+		teams.update(() => json.teams ?? []);
+		courts.update(() => json.courts ?? []);
+		games.update(() => json.games ?? []);
+		rounds.update(() => json.rounds ?? [1, 0]);
+		page.set(json.page ?? "preparation");
+	};
+	reader.readAsText(file);
+}

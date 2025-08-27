@@ -6,6 +6,7 @@
   import { page, rounds, games } from "./store";
   import type { Page } from "./store";
   import Result from "./lib/Result.svelte";
+  import { exportTournament, importTournament } from "./utils";
 
   const prepare: Page = "preparation";
   const play: Page = "play";
@@ -39,6 +40,22 @@
     }
     // If cancelled, do nothing
   }
+
+  let showFileInput = false;
+  let file: FileList | null = null;
+
+  function showImportInput() {
+    showFileInput = !showFileInput;
+  }
+
+  function processImport() {
+    if (file && file[0]) {
+      importTournament(file[0]);
+      showFileInput = false;
+      file = null;
+    }
+  }
+
 </script>
 
 <nav class="pages">
@@ -97,13 +114,41 @@
   </nav>
 {/if}
 
-<button
-  class="delete-button invalid"
-  on:click={deleteLocalStorage}
-  title="Delete Local Storage!"
->
-  <span role="img" aria-label="Garbage Icon">🗑️</span>
-</button>
+<div class="tools">
+  <button
+    class="invalid"
+    on:click={deleteLocalStorage}
+    title="Delete Local Storage!"
+  >
+    <span role="img" aria-label="Garbage Icon">🗑️</span>
+  </button>
+
+  <button
+    class="current"
+    on:click={exportTournament}
+    title="Export to JSON file!"
+  >
+    <span role="img" aria-label="Export Icon">📤️</span>
+  </button>
+
+  <button
+    class="current"
+    on:click={showImportInput}
+    title="Import from JSON file!"
+  >
+    <span role="img" aria-label="Import Icon">📥️</span>
+  </button>
+
+  {#if showFileInput}
+    <input
+      type="file"
+      accept=".json"
+      bind:files={file}
+      on:change={processImport}
+      style="margin-top: 10px;"
+    />
+  {/if}
+</div>
 
 <style>
   main {
@@ -148,10 +193,16 @@
     opacity: 0.5;
   }
 
-  .delete-button {
+  .tools {
     position: fixed;
     top: 10px;
     right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tools button {
     cursor: pointer;
     z-index: 999;
     box-shadow: -5px 10px 12px rgba(0, 0, 0, 0.2);
@@ -159,7 +210,7 @@
 
   @media screen and (min-width: 1080px) {
     /* TODO css variable in app.css */
-    .delete-button {
+    .tools button {
       right: calc((100vw - 1000px) / 2);
     }
   }
